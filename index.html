@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght,GRAD@0,17..18,400..700,131;1,17..18,400..700,131&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }  
+        html { overflow-x: hidden; } /* FIX 1: root-level horizontal scroll prevention */
         body {
         background-image: 
         linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
@@ -185,10 +186,17 @@
         }
         @media (max-width: 768px) {
             .hero, .section, .header, .footer { padding: 20px; }
-            .nav { position: relative; top: auto; right: auto; margin-bottom: 20px; }
-            .nav ul { flex-direction: row; gap: 15px; }
-            .vertical-text, .haiku { display: none; }
+            /* FIX 2: nav floats off-screen on mobile, make it static */
+            .nav { position: static; top: auto; right: auto; margin-bottom: 20px; }
+            .nav ul { flex-direction: row; flex-wrap: wrap; gap: 15px; }
+            /* FIX 3: ::after arrow at right:-15px bleeds outside viewport */
+            .nav a::after { display: none; }
+            /* FIX 4: these fixed elements overflow the viewport width on mobile */
+            .vertical-text { display: none; }
+            .haiku { display: none; }
             .projects-grid { grid-template-columns: 1fr; gap: 40px; }
+            /* FIX 5: canvas 500px wide overflows phone screens */
+            #ascii-canvas { width: 100% !important; height: auto !important; max-width: 320px; }
         }
     </style>
 </head>
@@ -212,7 +220,7 @@
         <section class="hero">
             <div class="hero-content">
                 <h1>from concept<br>to code.</h1>
-                <div class="subtitle">Hi there! You’ve found my portfolio</div>
+                <div class="subtitle">Hi there! You've found my portfolio</div>
                 <div class="description">
                     I focus on writing clean, practical code and delivering work that actually solves problems. Every line of code is intentional, helping create smooth, functional experiences.
                 </div>
