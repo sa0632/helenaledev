@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hargrove Construction Group | Hampton, VA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:   #111110;
+      --dark:    #1c1b19;
+      --gold:    #b8912c;
+      --gold-lt: #d4a93e;
+      --warm:    #f5f1ea;
+      --cream:   #faf8f4;
+      --mid:     #6b6760;
+      --border:  #e4dfd5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 60px;
+      height: 76px;
+      background: rgba(17,17,16,0.94);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(184,145,44,0.18);
+      transition: background 0.3s;
+    }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .nav-logo .wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .nav-logo .sub {
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 12.5px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.72);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--gold);
+      padding: 10px 22px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--gold-lt); }
+
+    /* ─── HERO ────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 680px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=85&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 40%;
+      transform: scale(1.04);
+      transition: transform 8s ease-out;
+    }
+
+    .hero-bg.loaded { transform: scale(1); }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(11,10,9,0.88) 0%,
+        rgba(11,10,9,0.45) 50%,
+        rgba(11,10,9,0.18) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      padding: 0 60px 88px;
+      max-width: 860px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--gold);
+      margin-right: 12px;
+      vertical-align: middle;
+      margin-bottom: 2px;
+    }
+
+    .hero-h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 6vw, 74px);
+      font-weight: 700;
+      line-height: 1.1;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .hero-h1 em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.68);
+      max-width: 520px;
+      margin-bottom: 42px;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--gold);
+      padding: 15px 32px;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover { background: var(--gold-lt); }
+
+    .btn-outline {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s;
+    }
+
+    .btn-outline:hover { color: var(--gold); }
+
+    .btn-outline svg { transition: transform 0.2s; }
+    .btn-outline:hover svg { transform: translateX(4px); }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 88px;
+      right: 60px;
+      display: flex;
+      gap: 40px;
+    }
+
+    .stat {
+      text-align: right;
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .stat-num span { color: var(--gold); font-size: 22px; }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      margin-top: 5px;
+    }
+
+    /* ─── TICKER ──────────────────────────────────────── */
+    .ticker {
+      background: var(--gold);
+      overflow: hidden;
+      padding: 12px 0;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: tickerScroll 28s linear infinite;
+    }
+
+    .ticker-inner span {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dark);
+      padding: 0 36px;
+    }
+
+    .ticker-inner span::after {
+      content: '·';
+      margin-left: 36px;
+    }
+
+    @keyframes tickerScroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── SECTION UTILS ──────────────────────────────── */
+    section { padding: 100px 60px; }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 4vw, 50px);
+      font-weight: 700;
+      line-height: 1.2;
+      color: var(--black);
+    }
+
+    .section-h2.light { color: #fff; }
+
+    /* ─── ABOUT ──────────────────────────────────────── */
+    #about {
+      background: var(--cream);
+      padding: 110px 60px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .about-img-wrap {
+      position: relative;
+    }
+
+    .about-img {
+      width: 100%;
+      height: 540px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -28px;
+      right: -28px;
+      width: 140px;
+      height: 140px;
+      background: var(--gold);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-badge .yr {
+      font-family: 'Playfair Display', serif;
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1;
+    }
+
+    .about-badge .yr-sub {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--dark);
+      margin-top: 4px;
+    }
+
+    .about-copy { padding-left: 10px; }
+
+    .about-copy p {
+      font-size: 15.5px;
+      color: var(--mid);
+      line-height: 1.85;
+      margin-top: 22px;
+    }
+
+    .about-copy p + p { margin-top: 16px; }
+
+    .about-list {
+      list-style: none;
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14.5px;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    .about-list li::before {
+      content: '';
+      width: 18px;
+      height: 2px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ─── SERVICES ──────────────────────────────────── */
+    #services {
+      background: var(--dark);
+      padding: 110px 60px;
+    }
+
+    .services-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      max-width: 1200px;
+      margin: 0 auto 64px;
+    }
+
+    .services-top .section-h2 { max-width: 480px; }
+
+    .services-top p {
+      font-size: 14.5px;
+      color: rgba(255,255,255,0.45);
+      max-width: 320px;
+      line-height: 1.8;
+      text-align: right;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      padding: 44px 38px;
+      border: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.3s, border-color 0.3s;
+      cursor: default;
+    }
+
+    .service-card:hover {
+      background: rgba(184,145,44,0.08);
+      border-color: rgba(184,145,44,0.3);
+    }
+
+    .service-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    .service-icon {
+      width: 44px;
+      height: 44px;
+      margin-bottom: 22px;
+      opacity: 0.8;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.75;
+    }
+
+    /* ─── PROJECTS ──────────────────────────────────── */
+    #projects {
+      background: var(--warm);
+      padding: 110px 60px;
+    }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      max-width: 1200px;
+      margin: 0 auto 56px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+
+    .project-card:hover img { transform: scale(1.05); }
+
+    .project-card:first-child { height: 500px; }
+    .project-card:not(:first-child) { height: 240px; }
+
+    .project-side {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(11,10,9,0.82) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px 28px;
+    }
+
+    .project-type {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 7px;
+    }
+
+    .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .project-loc {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      margin-top: 4px;
+    }
+
+    /* ─── PROCESS ────────────────────────────────────── */
+    #process {
+      background: var(--cream);
+      padding: 110px 60px;
+    }
+
+    .process-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 64px;
+      border-top: 1px solid var(--border);
+    }
+
+    .step {
+      padding: 44px 36px 44px 0;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+
+    .step:last-child { border-right: none; padding-right: 0; }
+    .step:not(:first-child) { padding-left: 36px; }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .step h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 12px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--mid);
+      line-height: 1.75;
+    }
+
+    /* ─── TESTIMONIALS ───────────────────────────────── */
+    #testimonials {
+      background: var(--dark);
+      padding: 110px 60px;
+    }
+
+    .testi-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 60px;
+    }
+
+    .testi-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 40px 36px;
+      transition: border-color 0.3s;
+    }
+
+    .testi-card:hover { border-color: rgba(184,145,44,0.3); }
+
+    .testi-quote {
+      font-size: 28px;
+      color: var(--gold);
+      font-family: 'Playfair Display', serif;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .testi-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.62);
+      line-height: 1.8;
+      font-style: italic;
+      margin-bottom: 32px;
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .testi-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
+      flex-shrink: 0;
+    }
+
+    .testi-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .testi-role {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.38);
+      margin-top: 2px;
+    }
+
+    /* ─── CONTACT ────────────────────────────────────── */
+    #contact {
+      background: var(--cream);
+      padding: 110px 60px;
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: start;
+    }
+
+    .contact-left p {
+      font-size: 15.5px;
+      color: var(--mid);
+      line-height: 1.85;
+      margin-top: 20px;
+      max-width: 400px;
+    }
+
+    .contact-info {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .contact-item-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-item-icon svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--dark);
+    }
+
+    .contact-item-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+
+    .contact-item-val {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--black);
+    }
+
+    /* FORM */
+    .contact-form { display: flex; flex-direction: column; gap: 18px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+    .field-wrap { display: flex; flex-direction: column; gap: 7px; }
+
+    .field-wrap label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+
+    .field-wrap input,
+    .field-wrap select,
+    .field-wrap textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 14.5px;
+      color: var(--black);
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 13px 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+
+    .field-wrap textarea { resize: vertical; min-height: 110px; }
+
+    .field-wrap input:focus,
+    .field-wrap select:focus,
+    .field-wrap textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-submit {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dark);
+      background: var(--gold);
+      padding: 16px 36px;
+      border: none;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+
+    .form-submit:hover { background: var(--gold-lt); }
+
+    /* ─── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: var(--black);
+      padding: 60px 60px 36px;
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-logo .wordmark {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-logo .sub {
+      font-size: 9.5px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .footer-logo p {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.35);
+      margin-top: 16px;
+      max-width: 280px;
+      line-height: 1.7;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 80px;
+    }
+
+    .footer-col h4 {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 11px; }
+
+    .footer-col ul li a {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 28px;
+    }
+
+    .footer-bottom p {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-lic {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .lic-badge {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 4px 10px;
+    }
+
+    /* ─── HAMBURGER (mobile) ─────────────────────────── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 1.5px;
+      background: #fff;
+      transition: all 0.3s;
+    }
+
+    /* ─── MOBILE ─────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .testi-grid { grid-template-columns: repeat(2, 1fr); }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card:first-child { height: 360px; }
+      .project-card:not(:first-child) { height: 280px; }
+      .project-side { display: contents; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 24px; }
+      .nav-links, .nav-cta { display: none; }
+      .hamburger { display: flex; }
+
+      section, #about, #services, #projects, #process, #testimonials, #contact { padding: 72px 24px; }
+      footer { padding: 48px 24px 28px; }
+
+      .hero-content { padding: 0 24px 72px; }
+      .hero-stats { right: 24px; bottom: 72px; gap: 24px; }
+      .stat-num { font-size: 28px; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      .about-badge { right: 12px; bottom: -18px; width: 110px; height: 110px; }
+      .about-badge .yr { font-size: 28px; }
+
+      .services-top { flex-direction: column; gap: 12px; }
+      .services-top p { text-align: left; }
+      .services-grid { grid-template-columns: 1fr; }
+
+      .projects-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+
+      .process-steps { grid-template-columns: 1fr 1fr; }
+
+      .testi-grid { grid-template-columns: 1fr; }
+
+      .contact-inner { grid-template-columns: 1fr; gap: 56px; }
+      .form-row { grid-template-columns: 1fr; }
+
+      .footer-top { flex-direction: column; gap: 48px; }
+      .footer-links { flex-direction: column; gap: 36px; }
+      .footer-bottom { flex-direction: column; gap: 14px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      <div class="wordmark">Hargrove Construction</div>
+      <div class="sub">Group · Est. 1997</div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Get a Quote</a>
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" id="heroBg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Hampton, Virginia</div>
+      <h1 class="hero-h1">Built Right.<br><em>Built to Last.</em></h1>
+      <p class="hero-sub">
+        Commercial, residential, and industrial construction across Hampton Roads — delivered on schedule, on budget, and without compromise.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">Request a Free Estimate</a>
+        <a href="#projects" class="btn-outline">
+          View Our Work
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">27<span>+</span></div>
+        <div class="stat-label">Years in Business</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">340<span>+</span></div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Client Retention</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner" id="ticker">
+      <span>Commercial Construction</span>
+      <span>Custom Home Builds</span>
+      <span>Historic Renovations</span>
+      <span>Industrial Facilities</span>
+      <span>Serving Hampton Roads Since 1997</span>
+      <span>VA Contractor License #2705180642</span>
+      <span>General Contracting</span>
+      <span>Design-Build Services</span>
+      <span>Commercial Construction</span>
+      <span>Custom Home Builds</span>
+      <span>Historic Renovations</span>
+      <span>Industrial Facilities</span>
+      <span>Serving Hampton Roads Since 1997</span>
+      <span>VA Contractor License #2705180642</span>
+      <span>General Contracting</span>
+      <span>Design-Build Services</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap">
+        <img
+          class="about-img"
+          src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80&auto=format&fit=crop"
+          alt="Hargrove Construction team on a job site"
+          loading="lazy"
+        />
+        <div class="about-badge">
+          <div class="yr">27</div>
+          <div class="yr-sub">Years of<br>Excellence</div>
+        </div>
+      </div>
+      <div class="about-copy">
+        <div class="section-tag">About Us</div>
+        <h2 class="section-h2">A Family Name<br>Hampton Trusts</h2>
+        <p>
+          Hargrove Construction Group was founded in 1997 by Robert Hargrove Sr. with a single crew, a beat-up Ford F-250, and a conviction that the Hampton Roads area deserved a contractor that didn't cut corners. That belief still drives everything we do.
+        </p>
+        <p>
+          Today, his son Robert Jr. leads a team of 60-plus experienced tradespeople across Hampton, Newport News, and the wider Tidewater region. Whether it's a ground-up commercial build, a full residential remodel, or an industrial project for one of the area's many defense contractors, we bring the same level of care and accountability to every job.
+        </p>
+        <ul class="about-list">
+          <li>Licensed General Contractor — Commonwealth of Virginia</li>
+          <li>OSHA-compliant safety program, zero lost-time incidents in 2023</li>
+          <li>Certified Small Business with Hampton City</li>
+          <li>Proud member of AGC of Virginia since 2001</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-top">
+      <div>
+        <div class="section-tag" style="color:var(--gold)">What We Do</div>
+        <h2 class="section-h2 light">Full-Service Construction<br>Under One Roof</h2>
+      </div>
+      <p>
+        We self-perform the majority of our trades — meaning fewer subs, tighter schedules, and one point of contact for your entire project.
+      </p>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="20" width="32" height="18" stroke="#b8912c" stroke-width="1.5"/>
+          <path d="M2 20L22 6L42 20" stroke="#b8912c" stroke-width="1.5" stroke-linejoin="round"/>
+          <rect x="17" y="28" width="10" height="10" stroke="#b8912c" stroke-width="1.5"/>
+        </svg>
+        <h3>Commercial Construction</h3>
+        <p>Office buildings, retail centers, restaurants, and mixed-use developments. We handle everything from site prep through certificate of occupancy.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="16" width="28" height="22" stroke="#b8912c" stroke-width="1.5"/>
+          <path d="M4 16L22 4L40 16" stroke="#b8912c" stroke-width="1.5" stroke-linejoin="round"/>
+          <rect x="14" y="26" width="7" height="12" stroke="#b8912c" stroke-width="1.5"/>
+          <rect x="23" y="22" width="7" height="8" stroke="#b8912c" stroke-width="1.5"/>
+        </svg>
+        <h3>Custom Home Builds</h3>
+        <p>From waterfront properties along the Chesapeake to established neighborhoods across the Peninsula — built to your plans or we can refer trusted local architects.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="8" width="32" height="28" stroke="#b8912c" stroke-width="1.5"/>
+          <path d="M6 16h32M6 24h32M14 8v28M30 8v28" stroke="#b8912c" stroke-width="1.5"/>
+        </svg>
+        <h3>Historic Renovations</h3>
+        <p>Hampton is one of America's oldest cities. We have extensive experience restoring and renovating historic structures while meeting modern code requirements.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">04</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="14" width="36" height="22" stroke="#b8912c" stroke-width="1.5"/>
+          <path d="M4 22h36M14 14v22" stroke="#b8912c" stroke-width="1.5"/>
+          <path d="M22 8v6M10 8h24" stroke="#b8912c" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h3>Industrial & Government</h3>
+        <p>Warehouses, manufacturing facilities, and federal/DoD work. Security-cleared personnel on staff. Experience with NAVFAC and Army Corps requirements.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">05</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="22" r="14" stroke="#b8912c" stroke-width="1.5"/>
+          <path d="M22 10v4M22 30v4M10 22h4M30 22h4" stroke="#b8912c" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="22" cy="22" r="5" stroke="#b8912c" stroke-width="1.5"/>
+        </svg>
+        <h3>Design-Build</h3>
+        <p>One firm, one contract. We partner with architects and engineers in-house to streamline coordination, reduce cost, and compress your project timeline.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-num">06</div>
+        <svg class="service-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8 36L22 8L36 36H8Z" stroke="#b8912c" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M15 28h14" stroke="#b8912c" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M22 20v8" stroke="#b8912c" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <h3>Pre-Construction & Estimating</h3>
+        <p>Detailed hard-bid estimates, value engineering, scheduling, and permitting support — before you've committed to a dime. We help you plan it right from the start.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="projects-header">
+      <div>
+        <div class="section-tag">Portfolio</div>
+        <h2 class="section-h2">Selected Projects</h2>
+      </div>
+      <a href="#contact" class="btn-outline" style="color:var(--black)">
+        See All Projects
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80&auto=format&fit=crop" alt="Coliseum Central Office Complex" loading="lazy" />
+        <div class="project-overlay">
+          <div class="project-type">Commercial · 2023</div>
+          <div class="project-name">Coliseum Central Office Complex</div>
+          <div class="project-loc">Hampton, VA — 48,000 sq ft</div>
+        </div>
+      </div>
+      <div class="project-side">
+        <div class="project-card">
+          <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?w=700&q=80&auto=format&fit=crop" alt="Phoebus Mixed-Use Renovation" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-type">Historic Renovation · 2022</div>
+            <div class="project-name">Phoebus Mixed-Use Renovation</div>
+            <div class="project-loc">Phoebus District, Hampton</div>
+          </div>
+        </div>
+        <div class="project-card">
+          <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80&auto=format&fit=crop" alt="Chesapeake Ave Custom Residence" loading="lazy" />
+          <div class="project-overlay">
+            <div class="project-type">Residential · 2023</div>
+            <div class="project-name">Chesapeake Ave Custom Residence</div>
+            <div class="project-loc">Fox Hill, Hampton</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process">
+    <div class="process-inner">
+      <div class="section-tag">How We Work</div>
+      <h2 class="section-h2" style="max-width:500px;">No surprises.<br>Just a clear path forward.</h2>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <h3>Discovery Call</h3>
+          <p>We start with a 30-minute call to understand your project scope, budget range, and timeline. No pressure, no sales pitch — just a real conversation.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <h3>Site Walk & Estimate</h3>
+          <p>We visit the site, review any existing plans, and put together a detailed written estimate. Turnaround is typically 5–7 business days.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <h3>Planning & Permitting</h3>
+          <p>Once contracted, we handle all permitting, schedule the trades, and provide you with a full project timeline before a single shovel hits the ground.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <h3>Build & Close Out</h3>
+          <p>Weekly updates, a dedicated superintendent on-site daily, and a thorough punch-list walk at the end. We don't close out until you're satisfied.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="testi-inner">
+      <div class="section-tag">Testimonials</div>
+      <h2 class="section-h2 light">What Our Clients Say</h2>
+      <div class="testi-grid">
+
+        <div class="testi-card">
+          <div class="testi-quote">&ldquo;</div>
+          <p class="testi-text">We've used three contractors over the years and Hargrove is the only one that actually called us back when something came up post-construction. That kind of accountability is rare. We're already planning our next project with them.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">DM</div>
+            <div>
+              <div class="testi-name">David Morales</div>
+              <div class="testi-role">Owner, Morales Restaurant Group · Hampton, VA</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-quote">&ldquo;</div>
+          <p class="testi-text">They came in on budget and two weeks ahead of schedule on our 12,000 sq ft office build. Rob Jr. was on-site almost every day. I've done commercial builds in three states and this was the smoothest process I've had.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">KT</div>
+            <div>
+              <div class="testi-name">Karen Tillman</div>
+              <div class="testi-role">VP of Operations, Tidewater Logistics Inc.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testi-card">
+          <div class="testi-quote">&ldquo;</div>
+          <p class="testi-text">Hargrove handled the renovation of our 1910-era property in Phoebus beautifully. They understood the historic requirements, navigated the city approvals for us, and the finished product exceeded what we imagined.</p>
+          <div class="testi-author">
+            <div class="testi-avatar">SB</div>
+            <div>
+              <div class="testi-name">Sandra & Bill Owens</div>
+              <div class="testi-role">Residential Client · Phoebus, Hampton</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <div class="section-tag">Get in Touch</div>
+        <h2 class="section-h2">Let's Talk<br>About Your Project</h2>
+        <p>
+          Whether you have complete drawings or just a rough idea, we're happy to talk through what's possible. No obligation, no hard close.
+        </p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8Z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Phone</div>
+              <div class="contact-item-val">(757) 849-4200</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-val">info@hargrovecg.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7Zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5Z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Office</div>
+              <div class="contact-item-val">1804 W. Mercury Blvd, Suite 110<br>Hampton, VA 23666</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="field-wrap">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Robert" required />
+          </div>
+          <div class="field-wrap">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" placeholder="Hargrove" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field-wrap">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="you@company.com" required />
+          </div>
+          <div class="field-wrap">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="(757) 000-0000" />
+          </div>
+        </div>
+        <div class="field-wrap">
+          <label for="type">Project Type</label>
+          <select id="type" required>
+            <option value="" disabled selected>Select a category...</option>
+            <option>Commercial Construction</option>
+            <option>Custom Home Build</option>
+            <option>Historic Renovation</option>
+            <option>Industrial / Government</option>
+            <option>Design-Build</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field-wrap">
+          <label for="message">Tell Us About Your Project</label>
+          <textarea id="message" placeholder="Brief description, approximate square footage, timeline, budget range..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="submitBtn">Send Message</button>
+        <p id="formMsg" style="font-size:13px;color:var(--gold);margin-top:4px;display:none;">Thank you — we'll be in touch within one business day.</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-logo">
+        <div class="wordmark">Hargrove Construction Group</div>
+        <div class="sub">Hampton, Virginia · Est. 1997</div>
+        <p>Serving Hampton, Newport News, and the greater Hampton Roads region for over 27 years.</p>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="#services">Commercial Construction</a></li>
+            <li><a href="#services">Custom Home Builds</a></li>
+            <li><a href="#services">Historic Renovations</a></li>
+            <li><a href="#services">Industrial & Government</a></li>
+            <li><a href="#services">Design-Build</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#projects">Portfolio</a></li>
+            <li><a href="#process">Our Process</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Hargrove Construction Group, LLC. All rights reserved.</p>
+      <div class="footer-lic">
+        <span class="lic-badge">VA Lic. #2705180642</span>
+        <span class="lic-badge">OSHA 30</span>
+        <span class="lic-badge">BBB A+</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hero image load animation
+    const bg = document.getElementById('heroBg');
+    const img = new Image();
+    img.onload = () => bg.classList.add('loaded');
+    img.src = 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1920&q=85&auto=format&fit=crop';
+
+    // Nav scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.style.background = 'rgba(17,17,16,0.98)';
+      } else {
+        navbar.style.background = 'rgba(17,17,16,0.94)';
+      }
+    }, { passive: true });
+
+    // Hamburger (mobile)
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    hamburger.addEventListener('click', () => {
+      const open = navLinks.style.display === 'flex';
+      if (open) {
+        navLinks.style.display = '';
+      } else {
+        navLinks.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:76px;left:0;right:0;background:rgba(17,17,16,0.98);padding:24px 24px 32px;gap:22px;';
+      }
+    });
+
+    // Scroll animations
+    const revealEls = document.querySelectorAll('.service-card, .step, .testi-card, .project-card, .about-grid, .contact-inner');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    revealEls.forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(22px)';
+      el.style.transition = 'opacity 0.55s ease, transform 0.55s ease';
+      observer.observe(el);
+    });
+
+    // Form submission
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const msg = document.getElementById('formMsg');
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+      setTimeout(() => {
+        document.getElementById('contactForm').reset();
+        btn.textContent = 'Send Message';
+        btn.disabled = false;
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 6000);
+      }, 1200);
+    }
+  </script>
+
+</body>
+</html>
