@@ -1,548 +1,1492 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Helena Le - Developer</title>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helena Le — Frontend Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght,GRAD@0,17..18,400..700,131;1,17..18,400..700,131&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }  
-        html { overflow-x: hidden; } /* FIX 1: root-level horizontal scroll prevention */
-        body {
-        background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url('https://unsplash.com/photos/BFFgACu5UXI/download?w=1920');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-                
-            color: #fff;
-            font-family: 'Google Sans', sans-serif;
-            font-weight: 600;
-            font-size: 18px;
-            line-height: 2.0;
-            letter-spacing: 0.05em;
-            overflow-x: hidden;
-            cursor: none;
-        }
-        .cursor {
-            cursor: none;
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: difference;
-            will-change: transform;
-            transition: transform 0.1s ease, border-color 0.2s ease;
-        }
-        .cursor.hover { transform: scale(2); border-color: rgba(255,255,255,0.6); }
-        .vertical-text {
-            writing-mode: vertical-rl;
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-            font-size: 19px;
-            opacity: 0.4;
-            letter-spacing: 0.3em;
-        }
-        .container { min-height: 100vh; display: flex; flex-direction: column; }
-        .header {
-            padding: 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .logo { font-size: 13px; font-weight: 300; opacity: 0.7; line-height: 1.2; }
-        .nav { position: fixed; top: 40px; right: 40px; z-index: 100; }
-        .nav ul { list-style: none; display: flex; flex-direction: column; gap: 20px; text-align: right; }
-        .nav a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-            position: relative;
-        }
-        .nav a:hover { opacity: 1; }
-        .nav a::after {
-            content: '';
-            position: absolute;
-            right: -15px;
-            top: 50%;
-            width: 8px;
-            height: 1px;
-            background: #fff;
-            transform: translateY(-50%) scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        .nav a:hover::after { transform: translateY(-50%) scaleX(1); }
-        .hero {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            padding: 0 40px;
-            min-height: 90vh;
-            position: relative;
-            gap: 60px;
-        }
-        .hero-content { max-width: 500px; }
-        .hero h1 {
-            font-size: 13px;
-            font-weight: 300;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.5s forwards;
-        }
-        .hero .subtitle {
-            font-size: 12px;
-            margin-bottom: 60px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 0.8s forwards;
-        }
-        .hero .description {
-            font-size: 12px;
-            line-height: 2;
-            max-width: 400px;
-            opacity: 0;
-            animation: fadeInUp 1s ease 1.1s forwards;
-        }
-        .ascii-cube-wrapper {
-            position: relative;
-            flex-shrink: 0;
-            opacity: 0;
-            animation: fadeIn 1.5s ease 1.3s forwards;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-        #ascii-canvas {
-            display: block;
-        }
-        .cube-hint {
-            font-size: 11px;
-            opacity: 0.25;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-        }
-        .section { padding: 80px 40px; border-top: 1px solid rgba(255,255,255,0.05); }
-        .section-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            opacity: 0.4;
-            margin-bottom: 40px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        .section-title::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,0.08); }
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 60px; margin-top: 40px; }
-        .project { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 40px; cursor: pointer; transition: opacity 0.3s ease; }
-        .project:hover { opacity: 0.7; }
-        .project-number { font-size: 11px; opacity: 0.3; margin-bottom: 15px; }
-        .project-title { font-size: 14px; font-weight: 300; margin-bottom: 20px; line-height: 1.4; }
-        .project-description { font-size: 12px; line-height: 2; opacity: 0.6; margin-bottom: 25px; }
-        .project-tech { font-size: 11px; opacity: 0.4; text-transform: uppercase; letter-spacing: 0.1em; }
-        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; margin-top: 40px; }
-        .skill-category { padding: 30px 0; }
-        .skill-category h3 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; opacity: 0.5; margin-bottom: 20px; }
-        .skill-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .skill-name { font-size: 11px; opacity: 0.7; flex: 1; }
-        .skill-level { width: 60px; height: 1px; background: rgba(255,255,255,0.1); position: relative; margin-left: 20px; }
-        .skill-fill { height: 100%; background: rgba(255,255,255,0.4); width: 0; transition: width 1.5s ease 0.3s; position: relative; }
-        .skill-fill::after { content: ''; position: absolute; right: 0; top: -1px; width: 2px; height: 3px; background: rgba(255,255,255,0.6); }
-        .timeline { max-width: 600px; position: relative; }
-        .timeline::before { content: ''; position: absolute; left: 60px; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.1); }
-        .timeline-item { display: flex; margin-bottom: 60px; position: relative; }
-        .timeline-item::before { display: none; }
-        .timeline-date { width: 120px; font-size: 11px; opacity: 0.4; text-align: right; padding-right: 40px; flex-shrink: 0; }
-        .timeline-content { flex: 1; padding-left: 40px; }
-        .timeline-content h3 { font-size: 14px; font-weight: 300; margin-bottom: 5px; }
-        .timeline-content .company { font-size: 12px; opacity: 0.5; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.1em; }
-        .timeline-content .description { font-size: 12px; line-height: 2; opacity: 0.7; margin-bottom: 15px; }
-        .timeline-skills { font-size: 11px; opacity: 0.4; letter-spacing: 0.1em; }
-        .footer { padding: 80px 40px 40px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
-        .contact-info { font-size: 12px; opacity: 0.6; line-height: 2; }
-        .contact-info a { color: #fff; text-decoration: none; opacity: 0.8; transition: opacity 0.3s ease; }
-        .contact-info a:hover { opacity: 1; }
-        .haiku { position: fixed; bottom: 40px; left: 40px; font-size: 11px; opacity: 0.2; line-height: 2; font-family: 'Noto Sans JP', sans-serif; pointer-events: none; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @media (max-width: 900px) {
-            .hero { flex-direction: column; padding: 40px 20px; min-height: auto; gap: 40px; }
-            .ascii-cube-wrapper { width: 100%; }
-        }
-        @media (max-width: 768px) {
-            .hero, .section, .header, .footer { padding: 20px; }
-            /* FIX 2: nav floats off-screen on mobile, make it static */
-            .nav { position: static; top: auto; right: auto; margin-bottom: 20px; }
-            .nav ul { flex-direction: row; flex-wrap: wrap; gap: 15px; }
-            /* FIX 3: ::after arrow at right:-15px bleeds outside viewport */
-            .nav a::after { display: none; }
-            /* FIX 4: these fixed elements overflow the viewport width on mobile */
-            .vertical-text { display: none; }
-            .haiku { display: none; }
-            .projects-grid { grid-template-columns: 1fr; gap: 40px; }
-            /* FIX 5: canvas 500px wide overflows phone screens */
-            #ascii-canvas { width: 100% !important; height: auto !important; max-width: 320px; }
-        }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Source+Serif+4:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --radius: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-xl: 2rem;
+    --radius-2xl: 2.5rem;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* video bg */
+  #video-bg {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .video-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.35) 0%,
+      rgba(0,0,0,0.15) 40%,
+      rgba(0,0,0,0.15) 60%,
+      rgba(0,0,0,0.55) 100%
+    );
+  }
+
+  /* glass effect */
+  .lg {
+    background: rgba(255,255,255,0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.45) 0%,
+      rgba(255,255,255,0.15) 20%,
+      transparent 40%,
+      transparent 60%,
+      rgba(255,255,255,0.15) 80%,
+      rgba(255,255,255,0.45) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* stronger version of the glass */
+  .lg-strong {
+    background: rgba(255,255,255,0.04);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(50px);
+    -webkit-backdrop-filter: blur(50px);
+    box-shadow: 4px 4px 4px rgba(0,0,0,0.05), inset 0 1px 1px rgba(255,255,255,0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lg-strong::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.5) 0%,
+      rgba(255,255,255,0.2) 20%,
+      transparent 40%,
+      transparent 60%,
+      rgba(255,255,255,0.2) 80%,
+      rgba(255,255,255,0.5) 100%
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* page wrapper */
+  #page {
+    position: relative;
+    z-index: 10;
+    min-height: 100vh;
+  }
+
+  /* nav - hidden until you scroll past hero */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  nav.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .nav-logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: #fff;
+    text-decoration: none;
+    pointer-events: auto;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: 999px;
+    padding: 0.4rem 0.75rem;
+    pointer-events: auto;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.7);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 400;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .nav-cta {
+    border-radius: 999px;
+    padding: 0.5rem 1.25rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s;
+    pointer-events: auto;
+  }
+
+  .nav-cta:hover { transform: scale(1.05); }
+
+  /* mobile drawer */
+  .menu-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    padding: 1.5rem;
+    transform: translateY(-110%);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+  }
+
+  .menu-drawer.open { transform: translateY(0); }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+
+  .drawer-logo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .drawer-close {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+
+  .drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .drawer-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: color 0.15s, padding-left 0.15s;
+    display: block;
+  }
+
+  .drawer-links a:hover {
+    color: #fff;
+    padding-left: 0.5rem;
+  }
+
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .drawer-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* base section styles */
+  section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+  }
+
+  /* hero */
+  #home {
+    flex-direction: row;
+    align-items: stretch;
+    padding: 0;
+    gap: 0;
+  }
+
+  .hero-left {
+    width: 52%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .hero-panel {
+    flex: 1;
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+  }
+
+  .hero-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: auto;
+  }
+
+  .hero-logo-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: #fff;
+  }
+
+  .menu-pill {
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .hero-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 3rem 0;
+  }
+
+  .hero-h1 {
+    font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+    font-weight: 500;
+    line-height: 1.0;
+    letter-spacing: -0.05em;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-h1 em {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 999px;
+    padding: 0.85rem 1.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-cta:hover { transform: scale(1.05); }
+  .hero-cta:active { transform: scale(0.95); }
+
+  .cta-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .pill {
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .hero-quote {
+    margin-top: auto;
+  }
+
+  .quote-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.5rem;
+  }
+
+  .quote-text {
+    font-size: 1rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .quote-text em {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+  }
+
+  .quote-author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .author-line {
+    height: 1px;
+    width: 2.5rem;
+    background: rgba(255,255,255,0.2);
+  }
+
+  /* right side of hero, hidden on mobile */
+  .hero-right {
+    width: 48%;
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    padding: 1.5rem 1.5rem 1.5rem 0;
+  }
+
+  @media (min-width: 1024px) {
+    .hero-right { display: flex; }
+  }
+
+  .right-top {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .social-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .icon-btn {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.75);
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s;
+  }
+
+  .icon-btn:hover { transform: scale(1.05); color: #fff; }
+
+  .community-card {
+    border-radius: var(--radius-lg);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    width: 14rem;
+    align-self: flex-end;
+  }
+
+  .community-card h3 {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0.35rem;
+  }
+
+  .community-card p {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.5;
+  }
+
+  .feature-section {
+    margin-top: auto;
+    border-radius: var(--radius-2xl);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .feature-row {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .feat-card {
+    flex: 1;
+    border-radius: var(--radius-lg);
+    padding: 1.1rem;
+  }
+
+  .feat-card svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 0.5rem;
+  }
+
+  .feat-card h4 {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0.2rem;
+  }
+
+  .feat-card p {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+  }
+
+  .feat-bottom {
+    border-radius: var(--radius-lg);
+    padding: 1rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .feat-thumb {
+    width: 4rem;
+    height: 3rem;
+    border-radius: 0.5rem;
+    background: rgba(255,255,255,0.08);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+  }
+
+  .feat-bottom-text h4 {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0.2rem;
+  }
+
+  .feat-bottom-text p {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+  }
+
+  /* shared stuff for the other sections */
+  .section-inner {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-h2 {
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .section-h2 em {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* about */
+  #about .section-inner {
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .about-left { flex: 1; }
+  .about-right { flex: 1; }
+
+  .about-body {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .skill-card {
+    border-radius: var(--radius);
+    padding: 1rem 1.1rem;
+  }
+
+  .skill-card h4 {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+  }
+
+  .skill-card p {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+  }
+
+  .about-stat-panel {
+    border-radius: var(--radius-xl);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .stat-item { }
+
+  .stat-num {
+    font-size: 2.5rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-num em {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+  }
+
+  .stat-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* experience */
+  #experience { background: transparent; }
+
+  .exp-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .exp-card {
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.75rem;
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    transition: transform 0.2s;
+  }
+
+  .exp-card:hover { transform: translateX(4px); }
+
+  .exp-date {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.35);
+    white-space: nowrap;
+    padding-top: 0.2rem;
+    min-width: 6rem;
+  }
+
+  .exp-content { flex: 1; }
+
+  .exp-role {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 0.2rem;
+  }
+
+  .exp-company {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 0.75rem;
+    text-transform: lowercase;
+    letter-spacing: 0.04em;
+  }
+
+  .exp-desc {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.7;
+    margin-bottom: 0.85rem;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .tech-tag {
+    border-radius: 999px;
+    padding: 0.2rem 0.7rem;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.55);
+  }
+
+  /* projects */
+  #projects .section-inner > .section-h2 { margin-bottom: 2rem; }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .project-card {
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s;
+    text-decoration: none;
+  }
+
+  .project-card:hover { transform: translateY(-3px); }
+
+  .project-num {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 1rem;
+  }
+
+  .project-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.6rem;
+  }
+
+  .project-desc {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    flex: 1;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .project-stack {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.04em;
+  }
+
+  .project-arrow {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.5);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .project-card:hover .project-arrow {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+  }
+
+  /* contact */
+  #contact .section-inner {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+
+  .contact-left { flex: 1.2; }
+  .contact-right { flex: 0.8; }
+
+  .contact-h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 500;
+    letter-spacing: -0.05em;
+    color: #fff;
+    line-height: 1.0;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-h2 em {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .contact-sub {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 28rem;
+  }
+
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-radius: 999px;
+    padding: 0.85rem 1.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+
+  .contact-email:hover { transform: scale(1.03); }
+
+  .contact-links {
+    border-radius: var(--radius-xl);
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-link-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    transition: transform 0.2s;
+    padding: 0.5rem 0;
+  }
+
+  .contact-link-item:hover { transform: translateX(4px); }
+
+  .link-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .link-label {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .link-sub {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.35);
+  }
+
+  .link-arrow {
+    margin-left: auto;
+    color: rgba(255,255,255,0.25);
+  }
+
+  footer {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 0.05em;
+  }
+
+  /* animations */
+  @keyframes fadeRise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-rise   { animation: fadeRise 0.8s ease-out both; }
+  .fade-rise-1 { animation: fadeRise 0.8s 0.15s ease-out both; }
+  .fade-rise-2 { animation: fadeRise 0.8s 0.3s ease-out both; }
+  .fade-rise-3 { animation: fadeRise 0.8s 0.45s ease-out both; }
+  .fade-rise-4 { animation: fadeRise 0.8s 0.6s ease-out both; }
+
+  /* mobile */
+  @media (max-width: 768px) {
+    #home { flex-direction: column; }
+    .hero-left { width: 100%; }
+    #about .section-inner,
+    #contact .section-inner { flex-direction: column; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+  }
+</style>
 </head>
 <body>
-    <div class="cursor"></div>
-    <div class="vertical-text">SOFTWARE DEVELOPER</div>
-    <div class="container">
-        <header class="header">
-            <div class="logo">helena le<br>developer</div>
-            <nav class="nav">
-                <ul>
-                    <li><a href="#home">home</a></li>
-                    <li><a href="#about">about</a></li>
-                    <li><a href="#experience">experience</a></li>
-                    <li><a href="#projects">projects</a></li>
-                    <li><a href="#contact">contact</a></li>
-                </ul>
-            </nav>
-        </header>
-        <section id="home" class="hero">
-        <section class="hero">
-            <div class="hero-content">
-                <h1>from concept<br>to code.</h1>
-                <div class="subtitle">Hi there! You've found my portfolio</div>
-                <div class="description">
-                    I focus on writing clean, practical code and delivering work that actually solves problems. Every line of code is intentional, helping create smooth, functional experiences.
-                </div>
-            </div>
-            <div class="ascii-cube-wrapper">
-                <canvas id="ascii-canvas" width="900" height="900" tabindex="0"
-                    role="img"
-                    aria-roledescription="3D ASCII cube with favicon texture, rotatable with arrow keys"
-                    aria-label="Interactive 3D ASCII rotating cube displaying the site favicon">
-                </canvas>
-            </div>
-        </section>
-        </section>
-        <section id="about" class="section">
-            <h2 class="section-title">about me_</h2>
-            <div style="max-width: 600px;">
-                <p style="font-size: 14px; line-height: 2.2; opacity: 0.7; margin-bottom: 40px;">
-                Hi, I'm Helena. I build clean, functional websites for small businesses and individuals. I care about thoughtful design, clear communication, and delivering quality work. I work with a small number of clients at a time so I can give each project the attention it deserves. Beyond coding, I enjoy reading, exploring art, and gaming
-                </p>
-            </div>
-        </section>
-        
-<section id="experience" class="section">
-    <h2 class="section-title">experience_</h2>
-        <div class="timeline-item">
-            <div class="timeline-date">2022 - present</div>
-            <div class="timeline-content">
-                <h3>frontend developer</h3>
-                <p class="company">freelancer</p>
-                <p class="description">built responsive web interfaces for small businesses, focusing on mobile-first design and smooth performance. also worked with modern development tools and workflows to keep projects organized and efficient.</p>
-                <div class="timeline-skills">javascript • css • webflow • sass • figma</div>
-            </div>
-        </div>
-        <div class="timeline-item">
-            <div class="timeline-date">2020 - 2022</div>
-            <div class="timeline-content">
-                <h3>self-taught beginner</h3>
-                <p class="company">personal projects</p>
-                <p class="description">started learning coding out of curiosity at 14, building small projects and experimenting with html and css. developed a genuine interest in how things are made on the web.</p>
-                <div class="timeline-skills">html • css • javascript • git</div>
-            </div>
-        </div>
-</section>
 
-        <section id="projects" class="section">
-  <h2 class="section-title">selected works_</h2>
+<!-- bg video -->
+<video id="video-bg" autoplay muted playsinline>
+  <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260315_073750_51473149-4350-4920-ae24-c8214286f323.mp4" type="video/mp4">
+</video>
+<div class="video-overlay"></div>
 
-  <div class="projects-grid">
-    
-<a href="https://sa0632.github.io/forge" target="_blank" style="text-decoration:none;color:inherit;">
-  <div class="project">
-    <div class="project-number">01</div>
-    <h3 class="project-title">Forge</h3>
-    <p class="project-description">
-      transform raw data into real-time, scalable insights with a fast, no-code pipeline built for modern teams.
-    </p>
-    <div class="project-tech">html / css / javascript</div>
+<!-- nav -->
+<nav>
+  <a href="#home" class="nav-logo">helena le</a>
+  <div class="nav-links lg" style="border-radius:999px;">
+    <a href="#home">home</a>
+    <a href="#about">about</a>
+    <a href="#experience">experience</a>
+    <a href="#projects">projects</a>
+    <a href="#contact">contact</a>
   </div>
-</a>
+  <a href="#contact" class="nav-cta lg" style="border-radius:999px;">hire me</a>
+</nav>
 
-    <a href="https://sa0632.github.io/jobbr" target="_blank" style="text-decoration:none;color:inherit;">
-      <div class="project">
-        <div class="project-number">02</div>
-        <h3 class="project-title">Jobbr</h3>
-        <p class="project-description">
-          a minimalist job application tracking tool designed to simplify the job hunt process.
-        </p>
-        <div class="project-tech">html / css / javascript</div>
-      </div>
-    </a>
-
-    <a href="https://helenaledev.com/amysbanhmi" target="_blank" style="text-decoration:none;color:inherit;">
-      <div class="project">
-        <div class="project-number">03</div>
-        <h3 class="project-title">Amy's Banh mi</h3>
-        <p class="project-description">
-a landing page for amy's bánh mì, a vietnamese sandwich shop. built with react and vite, featuring the menu, story, and contact info        </p>
-        <div class="project-tech">html / css / javascript</div>
-      </div>
-    </a>
-
-    <a href="https://helenaledev.com/hargrove-construction.html" target="_blank" style="text-decoration:none;color:inherit;">
-      <div class="project">
-        <div class="project-number">04</div>
-        <h3 class="project-title">Hargrove Construction</h3>
-        <p class="project-description">
-                a simple, clean website for a local construction company, showcasing their services and past projects, designed to be easy to navigate and mobile-friendly.
-        </p>
-        <div class="project-tech">html / css / javascript</div>
-      </div>
-    </a>
-
+<!-- mobile drawer -->
+<div class="drawer-overlay" id="drawer-overlay" onclick="closeMenu()"></div>
+<div class="menu-drawer lg-strong" id="menu-drawer" style="border-radius:0 0 var(--radius-xl) var(--radius-xl);">
+  <div class="drawer-header">
+    <span class="drawer-logo">hl.</span>
+    <button class="drawer-close" onclick="closeMenu()">✕</button>
   </div>
-</section>
+  <div class="drawer-links">
+    <a href="#home" onclick="closeMenu()">home</a>
+    <a href="#about" onclick="closeMenu()">about</a>
+    <a href="#experience" onclick="closeMenu()">experience</a>
+    <a href="#projects" onclick="closeMenu()">projects</a>
+    <a href="#contact" onclick="closeMenu()">contact</a>
+  </div>
+</div>
 
-        <section class="section">
-            <h2 class="section-title">capabilities_</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>frontend development_</h3>
+<!-- page -->
+<div id="page">
 
-<div class="skill-item">
-  <span class="skill-name">react / next.js</span>
-  <div class="skill-level"><div class="skill-fill" data-level="89"></div></div>
-</div>
-<div class="skill-item">
-  <span class="skill-name">typescript / javascript</span>
-  <div class="skill-level"><div class="skill-fill" data-level="78"></div></div>
-</div>
-<div class="skill-item">
-  <span class="skill-name">css / sass / tailwind</span>
-  <div class="skill-level"><div class="skill-fill" data-level="81"></div></div>
-</div>
-<div class="skill-item">
-  <span class="skill-name">html / accessibility / github</span>
-  <div class="skill-level"><div class="skill-fill" data-level="88"></div></div>
-</div>
-<div class="skill-item">
-  <span class="skill-name">ui/ux design basics</span>
-  <div class="skill-level"><div class="skill-fill" data-level="73"></div></div>
-</div>
-<div class="skill-item">
-  <span class="skill-name">api / integration</span>
-  <div class="skill-level"><div class="skill-fill" data-level="79"></div></div>
-</div>
-<div class="skill-item">
-  <span class="skill-name">figma / webflow</span>
-  <div class="skill-level"><div class="skill-fill" data-level="84"></div></div>
-</div>                </div>
+  <!-- hero -->
+  <section id="home">
+
+    <!-- left -->
+    <div class="hero-left">
+      <div class="hero-panel lg-strong fade-rise">
+
+        <!-- mini nav in the panel -->
+        <div class="hero-nav">
+          <span class="hero-logo-text">hl.</span>
+          <div class="menu-pill lg" style="border-radius:999px;cursor:pointer;" onclick="openMenu()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            menu
+          </div>
+        </div>
+
+        <!-- hero text -->
+        <div class="hero-center">
+          <div class="section-tag fade-rise-1">frontend developer — hampton roads, va</div>
+          <h1 class="hero-h1 fade-rise-1">
+            From concept<br>
+            to <em>code,</em><br>
+            <em>built with</em><br>
+            intention.
+          </h1>
+
+          <a href="#projects" class="hero-cta lg-strong fade-rise-2" style="border-radius:999px;">
+            <span class="cta-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </span>
+            view my work
+          </a>
+
+          <div class="pills fade-rise-3">
+            <span class="pill lg" style="border-radius:999px;">react &amp; typescript</span>
+            <span class="pill lg" style="border-radius:999px;">ui/ux design</span>
+            <span class="pill lg" style="border-radius:999px;">freelance</span>
+          </div>
+
+          <div class="hero-quote fade-rise-4">
+            <div class="quote-label">approach</div>
+            <p class="quote-text">"Every line of code is <em>intentional</em>,<br>helping create smooth, functional experiences."</p>
+            <div class="quote-author">
+              <span class="author-line"></span>
+              Helena Le
+              <span class="author-line"></span>
             </div>
-        </section>
+          </div>
+        </div>
 
-        <footer id="contact" class="footer">
-            <div class="contact-info">
-                get in touch_<br><br>
-                <a href="mailto:helenale.dev@gmail.com">helenale.dev@gmail.com</a><br>
-                <a href="https://github.com/sa0632" target="_blank">github.com/sa0632</a><br>
-                <a href="https://www.linkedin.com/in/helenaledev/" target="_blank">linkedin.com/in/helenale</a>
-            </div>
-        </footer>
+      </div>
     </div>
 
-    <div class="haiku">
-        コードは詩<br>
-        シンプルさの中に<br>
-        美しさあり
+    <!-- right side (desktop only) -->
+    <div class="hero-right">
+      <div class="right-top">
+        <div class="social-pill lg" style="border-radius:999px;">
+          <a href="https://github.com/sa0632" target="_blank" class="icon-btn" title="GitHub">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://linkedin.com/in/helenaledev" target="_blank" class="icon-btn" title="LinkedIn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <div class="icon-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+        <div class="icon-btn lg" style="width:2.25rem;height:2.25rem;border-radius:50%;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+        </div>
+      </div>
+
+      <div class="community-card lg" style="border-radius:var(--radius-lg);">
+        <h3>open to work</h3>
+        <p>looking for frontend / full-stack roles in the Hampton Roads area or remote. let's build something together.</p>
+      </div>
+
+      <div class="feature-section lg-strong" style="border-radius:var(--radius-2xl);">
+        <div class="feature-row">
+          <div class="feat-card lg" style="border-radius:var(--radius-lg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            <h4>clean code</h4>
+            <p>intentional, readable, and maintainable.</p>
+          </div>
+          <div class="feat-card lg" style="border-radius:var(--radius-lg);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            <h4>responsive</h4>
+            <p>mobile-first, works on every screen.</p>
+          </div>
+        </div>
+        <a href="#about" class="feat-bottom lg" style="border-radius:var(--radius-lg);text-decoration:none;cursor:pointer;">
+          <div class="feat-thumb">💻</div>
+          <div class="feat-bottom-text">
+            <h4>4+ years self-taught</h4>
+            <p>started at 14, building real things from curiosity. still going.</p>
+          </div>
+          <div class="icon-btn" style="margin-left:auto;flex-shrink:0;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </a>
+      </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-    (function() {
-        const canvas = document.getElementById('ascii-canvas');
-        const W = 500, H = 500;
-        canvas.width = W; canvas.height = H;
+  </section>
 
-        const offscreen = document.createElement('canvas');
-        offscreen.width = W; offscreen.height = H;
-        const renderer = new THREE.WebGLRenderer({ canvas: offscreen, antialias: true, alpha: true });
-        renderer.setSize(W, H);
-        renderer.setClearColor(0x000000, 0);
+  <!-- about -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="about-left">
+        <div class="section-tag">about me</div>
+        <h2 class="section-h2">
+          I build things that<br>
+          <em>actually work.</em>
+        </h2>
+        <p class="about-body">
+          Hi, I'm Helena. I build clean, functional websites for small businesses and individuals. I care about thoughtful design, clear communication, and delivering quality work.
+        </p>
+        <p class="about-body">
+          I work with a small number of clients at a time so I can give each project the attention it deserves. Beyond coding, I enjoy reading, exploring art, and gaming.
+        </p>
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-        camera.position.set(0, 0, 3.2);
+        <div class="skills-grid">
+          <div class="skill-card lg" style="border-radius:var(--radius);">
+            <h4>frontend</h4>
+            <p>React · Next.js · TypeScript · Tailwind · Sass</p>
+          </div>
+          <div class="skill-card lg" style="border-radius:var(--radius);">
+            <h4>tooling</h4>
+            <p>Figma · Webflow · GitHub · Vite · VS Code</p>
+          </div>
+          <div class="skill-card lg" style="border-radius:var(--radius);">
+            <h4>api & integration</h4>
+            <p>REST APIs · OAuth · Node.js basics</p>
+          </div>
+          <div class="skill-card lg" style="border-radius:var(--radius);">
+            <h4>design basics</h4>
+            <p>UI/UX principles · Accessibility · Mobile-first</p>
+          </div>
+        </div>
+      </div>
 
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight.position.set(2, 3, 4);
-        scene.add(dirLight);
+      <div class="about-right">
+        <div class="about-stat-panel lg-strong" style="border-radius:var(--radius-xl);">
+          <div class="stat-item">
+            <div class="stat-num">4+</div>
+            <div class="stat-label">years building on the web</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num"><em>freelance</em></div>
+            <div class="stat-label">frontend developer · 2022–present</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num">hampton<br>roads</div>
+            <div class="stat-label">va · open to remote</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-num"><em>small<br>teams</em></div>
+            <div class="stat-label">i give every project full attention</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        const img = new Image();
-        img.src = 'favicon.ico';
+  <!-- experience -->
+  <section id="experience">
+    <div class="section-inner">
+      <div class="section-tag">experience</div>
+      <h2 class="section-h2">
+        Where I've been,<br>
+        <em>what I've built.</em>
+      </h2>
 
-        let cube;
-        img.onload = () => {
-            const tex = new THREE.Texture(img);
-            tex.needsUpdate = true;
+      <div class="exp-list">
+        <div class="exp-card lg-strong" style="border-radius:var(--radius-lg);">
+          <div class="exp-date">2022 — present</div>
+          <div class="exp-content">
+            <div class="exp-role">Frontend Developer</div>
+            <div class="exp-company">freelancer · helenaledev.com</div>
+            <p class="exp-desc">
+              Built responsive web interfaces for small businesses, focusing on mobile-first design and smooth performance. Worked with modern development tools and workflows to keep projects organized and efficient.
+            </p>
+            <div class="tag-row">
+              <span class="tech-tag lg" style="border-radius:999px;">javascript</span>
+              <span class="tech-tag lg" style="border-radius:999px;">css</span>
+              <span class="tech-tag lg" style="border-radius:999px;">react</span>
+              <span class="tech-tag lg" style="border-radius:999px;">webflow</span>
+              <span class="tech-tag lg" style="border-radius:999px;">sass</span>
+              <span class="tech-tag lg" style="border-radius:999px;">figma</span>
+            </div>
+          </div>
+        </div>
 
-            const geo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
-            const mat = new THREE.MeshPhongMaterial({
-                color: 0x888888,
-                shininess: 60,
-            });
-            cube = new THREE.Mesh(geo, mat);
-            cube.position.x = 0.4;
-            camera.position.set(0.3, 0, 3.2);
-            scene.add(cube);
-        };
+        <div class="exp-card lg" style="border-radius:var(--radius-lg);">
+          <div class="exp-date">2020 — 2022</div>
+          <div class="exp-content">
+            <div class="exp-role">Self-Taught Beginner</div>
+            <div class="exp-company">personal projects</div>
+            <p class="exp-desc">
+              Started learning coding out of curiosity at 14, building small projects and experimenting with HTML and CSS. Developed a genuine interest in how things are made on the web.
+            </p>
+            <div class="tag-row">
+              <span class="tech-tag lg" style="border-radius:999px;">html</span>
+              <span class="tech-tag lg" style="border-radius:999px;">css</span>
+              <span class="tech-tag lg" style="border-radius:999px;">javascript</span>
+              <span class="tech-tag lg" style="border-radius:999px;">git</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        const ASCII_CHARS = ".#<>";
-        const COLS = 64, ROWS = 64;
-        const cellW = W / COLS, cellH = H / ROWS;
+  <!-- projects -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-tag">selected works</div>
+      <h2 class="section-h2">
+        Things I've<br>
+        <em>shipped.</em>
+      </h2>
 
-        const ctx = canvas.getContext('2d');
-        ctx.font = `${Math.floor(cellH * 0.85)}px monospace`;
-        ctx.textBaseline = 'top';
+      <div class="projects-grid">
 
-        let rotX = 0.955, rotY = 0.785;
-        let targetRotX = 0.955, targetRotY = 0.785;
-        let autoRotate = true;
-        let idleTimer = null;
-        const IDLE_DELAY = 0;
+        <a href="https://sa0632.github.io/forge" target="_blank" class="project-card lg-strong" style="border-radius:var(--radius-xl);">
+          <div class="project-num">01</div>
+          <div class="project-title">Forge</div>
+          <p class="project-desc">Transform raw data into real-time, scalable insights with a fast, no-code pipeline built for modern teams.</p>
+          <div class="project-footer">
+            <span class="project-stack">html · css · javascript</span>
+            <div class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        let isDragging = false;
-        let lastMouseX = 0, lastMouseY = 0;
-        canvas.style.cursor = 'grab';
+        <a href="https://sa0632.github.io/jobbr" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
+          <div class="project-num">02</div>
+          <div class="project-title">Jobbr</div>
+          <p class="project-desc">A minimalist job application tracking tool designed to simplify the job hunt process.</p>
+          <div class="project-footer">
+            <span class="project-stack">html · css · javascript</span>
+            <div class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        canvas.addEventListener('mousedown', e => {
-            isDragging = true;
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
-            autoRotate = false;
-            canvas.style.cursor = 'grabbing';
-            clearTimeout(idleTimer);
-        });
+        <a href="https://helenaledev.com/amysbanhmi" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
+          <div class="project-num">03</div>
+          <div class="project-title">Amy's Bánh Mì</div>
+          <p class="project-desc">A landing page for a Vietnamese sandwich shop. Built with React and Vite, featuring the menu, story, and contact info.</p>
+          <div class="project-footer">
+            <span class="project-stack">react · vite · css</span>
+            <div class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        window.addEventListener('mousemove', e => {
-            if (!isDragging) return;
-            const dx = e.clientX - lastMouseX;
-            const dy = e.clientY - lastMouseY;
-            targetRotY += dx * 0.005;
-            targetRotX += dy * 0.005;
-            lastMouseX = e.clientX;
-            lastMouseY = e.clientY;
-        });
+        <a href="https://helenaledev.com/hargrove-construction.html" target="_blank" class="project-card lg-strong" style="border-radius:var(--radius-xl);">
+          <div class="project-num">04</div>
+          <div class="project-title">Hargrove Construction</div>
+          <p class="project-desc">A clean, mobile-friendly website for a local construction company showcasing services and past projects.</p>
+          <div class="project-footer">
+            <span class="project-stack">html · css · javascript</span>
+            <div class="project-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </div>
+          </div>
+        </a>
 
-        window.addEventListener('mouseup', () => {
-            if (!isDragging) return;
-            isDragging = false;
-            canvas.style.cursor = 'grab';
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(() => { 
-                autoRotate = true; 
-            }, IDLE_DELAY);
-        });
+      </div>
+    </div>
+  </section>
 
-        const readCanvas = document.createElement('canvas');
-        readCanvas.width = W; readCanvas.height = H;
-        const readCtx = readCanvas.getContext('2d', { willReadFrequently: true });
+  <!-- contact -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-left">
+        <div class="section-tag">get in touch</div>
+        <h2 class="contact-h2">
+          Let's build<br>
+          something<br>
+          <em>together.</em>
+        </h2>
+        <p class="contact-sub">
+          Whether you need a new website, a refresh, or just want to talk frontend — I'm always open to a conversation. I work with a small number of clients at a time, so reach out early.
+        </p>
+        <a href="mailto:helenale.dev@gmail.com" class="contact-email lg-strong" style="border-radius:999px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          helenale.dev@gmail.com
+        </a>
+      </div>
 
-        function getLuminance(data, x, y) {
-            const i = (y * W + x) * 4;
-            const a = data[i + 3] / 255;
-            if (a < 0.05) return -1;
-            const r = data[i], g = data[i+1], b = data[i+2];
-            return (0.299*r + 0.587*g + 0.114*b) / 255 * a;
+      <div class="contact-right">
+        <div class="contact-links lg-strong" style="border-radius:var(--radius-xl);">
+          <a href="https://github.com/sa0632" target="_blank" class="contact-link-item">
+            <div class="link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </div>
+            <div>
+              <div class="link-label">GitHub</div>
+              <div class="link-sub">github.com/sa0632</div>
+            </div>
+            <div class="link-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+
+          <div style="height:1px;background:rgba(255,255,255,0.08);"></div>
+
+          <a href="https://linkedin.com/in/helenaledev" target="_blank" class="contact-link-item">
+            <div class="link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </div>
+            <div>
+              <div class="link-label">LinkedIn</div>
+              <div class="link-sub">linkedin.com/in/helenaledev</div>
+            </div>
+            <div class="link-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+
+          <div style="height:1px;background:rgba(255,255,255,0.08);"></div>
+
+          <a href="https://helenaledev.com" target="_blank" class="contact-link-item">
+            <div class="link-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+            </div>
+            <div>
+              <div class="link-label">Portfolio</div>
+              <div class="link-sub">helenaledev.com</div>
+            </div>
+            <div class="link-arrow">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div style="display:flex;flex-direction:column;align-items:center;padding:4rem 2rem 2.5rem;gap:1.5rem;">
+    <pre id="ascii-cube" style="font-family:monospace;font-size:0.75rem;line-height:1.3;color:rgba(255,255,255,0.35);letter-spacing:0.05em;text-align:center;user-select:none;transition:color 0.3s;white-space:pre;"></pre>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:0.35rem;">
+      <span style="font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;letter-spacing:-0.03em;color:rgba(255,255,255,0.5);">helena le</span>
+      <span style="font-family:'Poppins',sans-serif;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);">© 2026 · built with intention · helenaledev.com</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const cos = Math.cos, sin = Math.sin;
+  const vertices = [
+    [-1,-1,-1],[1,-1,-1],[1,1,-1],[-1,1,-1],
+    [-1,-1, 1],[1,-1, 1],[1,1, 1],[-1,1, 1]
+  ];
+  const edges = [
+    [0,1],[1,2],[2,3],[3,0],
+    [4,5],[5,6],[6,7],[7,4],
+    [0,4],[1,5],[2,6],[3,7]
+  ];
+
+  const W = 38, H = 18;
+  let ax = 0.4, ay = 0.6, az = 0.2;
+
+  function project([x,y,z]) {
+    const fov = 4;
+    const scale = fov / (fov + z);
+    return [
+      Math.round((x * scale * 7) + W / 2),
+      Math.round((y * scale * 3.5) + H / 2)
+    ];
+  }
+
+  function rotate([x,y,z], rx,ry,rz) {
+    let nx,ny,nz;
+    ny = y*cos(rx) - z*sin(rx); nz = y*sin(rx) + z*cos(rx); y=ny; z=nz;
+    nx = x*cos(ry) + z*sin(ry); nz = -x*sin(ry) + z*cos(ry); x=nx; z=nz;
+    nx = x*cos(rz) - y*sin(rz); ny = x*sin(rz) + y*cos(rz);
+    return [nx, ny, nz];
+  }
+
+  function draw() {
+    const grid = Array.from({length:H}, () => Array(W).fill(' '));
+
+    const rotated = vertices.map(v => rotate(v, ax, ay, az));
+    const projected = rotated.map(project);
+
+    edges.forEach(([a,b]) => {
+      const [x0,y0] = projected[a];
+      const [x1,y1] = projected[b];
+      const steps = Math.max(Math.abs(x1-x0), Math.abs(y1-y0), 1) * 2;
+      for (let i=0; i<=steps; i++) {
+        const t = i/steps;
+        const px = Math.round(x0 + (x1-x0)*t);
+        const py = Math.round(y0 + (y1-y0)*t);
+        if (px>=0 && px<W && py>=0 && py<H) {
+          const dx = Math.abs(x1-x0), dy = Math.abs(y1-y0);
+          grid[py][px] = dx > dy*1.8 ? '-' : dy > dx*1.8 ? '|' : (((x1-x0)*(y1-y0))>0 ? '\\' : '/');
         }
+      }
+    });
 
-        function animate() {
-            requestAnimationFrame(animate);
+    projected.forEach(([px,py]) => {
+      if (px>=0 && px<W && py>=0 && py<H) grid[py][px] = '+';
+    });
 
-            if (autoRotate) {
-                targetRotY += 0.005; 
-                targetRotX += 0.003; 
-            }
+    document.getElementById('ascii-cube').textContent = grid.map(r=>r.join('')).join('\n');
+    ax += 0.008; ay += 0.012; az += 0.005;
+    requestAnimationFrame(draw);
+  }
 
-            rotX += (targetRotX - rotX) * 0.05;
-            rotY += (targetRotY - rotY) * 0.05;
+  const cubeEl = document.getElementById('ascii-cube');
+  cubeEl.addEventListener('mouseenter', () => cubeEl.style.color = 'rgba(255,255,255,0.7)');
+  cubeEl.addEventListener('mouseleave', () => cubeEl.style.color = 'rgba(255,255,255,0.35)');
 
-            if (cube) {
-                cube.rotation.x = rotX;
-                cube.rotation.y = rotY;
-            }
+  draw();
+})();
+</script>
 
-            renderer.render(scene, camera);
+<script>
+  const video = document.getElementById('video-bg');
+  let rafId;
 
-            readCtx.clearRect(0, 0, W, H);
-            readCtx.drawImage(renderer.domElement, 0, 0);
-            const data = readCtx.getImageData(0, 0, W, H).data;
-
-            ctx.clearRect(0, 0, W, H);
-            for (let row = 0; row < ROWS; row++) {
-                for (let col = 0; col < COLS; col++) {
-                    const px = Math.floor(col * cellW + cellW / 2);
-                    const py = Math.floor(row * cellH + cellH / 2);
-                    const lum = getLuminance(data, px, py);
-                    if (lum < 0) continue;
-                    const charIdx = Math.floor((1 - lum) * (ASCII_CHARS.length - 1));
-                    const char = ASCII_CHARS[Math.max(0, Math.min(ASCII_CHARS.length - 1, charIdx))];
-                    ctx.fillStyle = 'white';
-                    ctx.fillText(char, col * cellW, row * cellH);
-                }
-            }
-        }
-
-        animate();
-    })();
-
-    const cursor = document.querySelector('.cursor');
-    let mouseX = 0, mouseY = 0, cursorX = 0, cursorY = 0;
-    document.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
-    function animateCursor() {
-        cursorX += (mouseX - cursorX) * 0.15;
-        cursorY += (mouseY - cursorY) * 0.15;
-        cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px)`;
-        requestAnimationFrame(animateCursor);
+  function tick() {
+    if (!video.duration) { rafId = requestAnimationFrame(tick); return; }
+    const t = video.currentTime;
+    const d = video.duration;
+    const fadeDur = 0.5;
+    if (t < fadeDur) {
+      video.style.opacity = t / fadeDur;
+    } else if (t > d - fadeDur) {
+      video.style.opacity = (d - t) / fadeDur;
+    } else {
+      video.style.opacity = 1;
     }
-    animateCursor();
-    document.querySelectorAll('a, .project').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
+    rafId = requestAnimationFrame(tick);
+  }
 
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
+  video.addEventListener('canplay', () => {
+    video.play().catch(() => {});
+    rafId = requestAnimationFrame(tick);
+  });
 
-    const skillObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.querySelectorAll('.skill-fill').forEach((fill, i) => {
-                    setTimeout(() => { fill.style.width = fill.getAttribute('data-level') + '%'; }, i * 100);
-                });
-            }
-        });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.skill-category').forEach(s => skillObserver.observe(s));
-    </script>
+  video.addEventListener('ended', () => {
+    video.style.opacity = 0;
+    setTimeout(() => {
+      video.currentTime = 0;
+      video.play().catch(() => {});
+    }, 100);
+  });
+
+  // show fixed nav only after scrolling past hero
+  const fixedNav = document.querySelector('nav');
+  const heroSection = document.getElementById('home');
+
+  function onScroll() {
+    const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
+    if (window.scrollY > heroBottom - 80) {
+      fixedNav.classList.add('visible');
+    } else {
+      fixedNav.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // menu drawer
+  function openMenu() {
+    document.getElementById('menu-drawer').classList.add('open');
+    document.getElementById('drawer-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    document.getElementById('menu-drawer').classList.remove('open');
+    document.getElementById('drawer-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
+
 </body>
 </html>
