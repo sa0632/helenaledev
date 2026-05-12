@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Source+Serif+4:ital,wght@0,400;1,400;1,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -26,7 +28,6 @@
     overflow-x: hidden;
   }
 
-  /* video bg */
   #video-bg {
     position: fixed;
     inset: 0;
@@ -51,7 +52,6 @@
     );
   }
 
-  /* glass effect */
   .lg {
     background: rgba(255,255,255,0.01);
     background-blend-mode: luminosity;
@@ -82,7 +82,6 @@
     pointer-events: none;
   }
 
-  /* stronger version of the glass */
   .lg-strong {
     background: rgba(255,255,255,0.04);
     background-blend-mode: luminosity;
@@ -113,14 +112,12 @@
     pointer-events: none;
   }
 
-  /* page wrapper */
   #page {
     position: relative;
     z-index: 10;
     min-height: 100vh;
   }
 
-  /* nav - hidden until you scroll past hero */
   nav {
     position: fixed;
     top: 0;
@@ -189,7 +186,6 @@
 
   .nav-cta:hover { transform: scale(1.05); }
 
-  /* mobile drawer */
   .menu-drawer {
     position: fixed;
     top: 0;
@@ -271,7 +267,6 @@
     pointer-events: auto;
   }
 
-  /* base section styles */
   section {
     min-height: 100vh;
     display: flex;
@@ -280,7 +275,6 @@
     padding: 6rem 2rem 4rem;
   }
 
-  /* hero */
   #home {
     flex-direction: row;
     align-items: stretch;
@@ -397,9 +391,7 @@
     color: rgba(255,255,255,0.75);
   }
 
-  .hero-quote {
-    margin-top: auto;
-  }
+  .hero-quote { margin-top: auto; }
 
   .quote-label {
     font-size: 0.65rem;
@@ -438,7 +430,6 @@
     background: rgba(255,255,255,0.2);
   }
 
-  /* right side of hero, hidden on mobile */
   .hero-right {
     width: 48%;
     min-height: 100vh;
@@ -512,10 +503,7 @@
     gap: 0.75rem;
   }
 
-  .feature-row {
-    display: flex;
-    gap: 0.75rem;
-  }
+  .feature-row { display: flex; gap: 0.75rem; }
 
   .feat-card {
     flex: 1;
@@ -576,7 +564,6 @@
     line-height: 1.5;
   }
 
-  /* shared stuff for the other sections */
   .section-inner {
     width: 100%;
     max-width: 1100px;
@@ -607,11 +594,10 @@
     color: rgba(255,255,255,0.65);
   }
 
-  /* about */
   #about .section-inner {
     display: flex;
     gap: 3rem;
-    align-items: center;
+    align-items: flex-start;
   }
 
   .about-left { flex: 1; }
@@ -659,8 +645,6 @@
     gap: 1.5rem;
   }
 
-  .stat-item { }
-
   .stat-num {
     font-size: 2.5rem;
     font-weight: 500;
@@ -687,7 +671,6 @@
     background: rgba(255,255,255,0.1);
   }
 
-  /* experience */
   #experience { background: transparent; }
 
   .exp-list {
@@ -754,7 +737,6 @@
     color: rgba(255,255,255,0.55);
   }
 
-  /* projects */
   #projects .section-inner > .section-h2 { margin-bottom: 2rem; }
 
   .projects-grid {
@@ -827,7 +809,6 @@
     color: #fff;
   }
 
-  /* contact */
   #contact .section-inner {
     display: flex;
     gap: 3rem;
@@ -927,13 +908,11 @@
     position: relative;
     z-index: 10;
     text-align: center;
-    padding: 2rem;
     font-size: 0.7rem;
     color: rgba(255,255,255,0.25);
     letter-spacing: 0.05em;
   }
 
-  /* animations */
   @keyframes fadeRise {
     from { opacity: 0; transform: translateY(20px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -945,7 +924,6 @@
   .fade-rise-3 { animation: fadeRise 0.8s 0.45s ease-out both; }
   .fade-rise-4 { animation: fadeRise 0.8s 0.6s ease-out both; }
 
-  /* hero photo */
   .hero-photo {
     align-self: flex-end;
     margin-bottom: 1rem;
@@ -956,8 +934,119 @@
     display: block;
   }
 
+  /* floating cat widget */
+  #cat-widget {
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
 
-  /* mobile */
+  #cat-widget.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  #cat-bubble {
+    border-radius: var(--radius-lg);
+    padding: 0.75rem 1rem;
+    max-width: 190px;
+    text-align: left;
+  }
+
+  #cat-img-container {
+    position: relative;
+    width: 170px;
+    height: 170px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  #cat-img-1, #cat-img-2, #cat-img-3 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: var(--radius-lg);
+  }
+
+  #cat-img-2 { transform: scale(1.20); }
+
+  /* carousel */
+  #photo-carousel {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  #carousel-track {
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    width: 100%;
+  }
+
+  #carousel-inner {
+    display: flex;
+    will-change: transform;
+  }
+
+  #carousel-inner img {
+    min-width: 100%;
+    width: 100%;
+    height: 460px;
+    object-fit: cover;
+    object-position: center top;
+    flex-shrink: 0;
+    display: block;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(8px);
+    transition: background 0.2s;
+    z-index: 2;
+  }
+
+  .carousel-btn:hover { background: rgba(255,255,255,0.2); }
+  .carousel-btn.prev { left: -1.25rem; }
+  .carousel-btn.next { right: -1.25rem; }
+
+  .cdot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .cdot.active { background: rgba(255,255,255,0.7); }
+
   @media (max-width: 768px) {
     #home { flex-direction: column; }
     .hero-left { width: 100%; }
@@ -966,18 +1055,30 @@
     .projects-grid { grid-template-columns: 1fr; }
     .skills-grid { grid-template-columns: 1fr; }
     nav .nav-links { display: none; }
+    .carousel-btn.prev { left: 0.25rem; }
+    .carousel-btn.next { right: 0.25rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- bg video -->
+<!-- floating cat widget -->
+<div id="cat-widget">
+  <div id="cat-bubble" class="lg-strong">
+    <p id="cat-message" style="font-size:0.8rem;color:rgba(255,255,255,0.85);line-height:1.5;margin:0;font-weight:300;">Hi, I'm Samir!</p>
+  </div>
+  <div id="cat-img-container">
+    <img id="cat-img-1" src="images/IMG_7421.png" alt="Samir neutral" style="opacity:1;transition:opacity 0.4s ease;">
+    <img id="cat-img-2" src="images/IMG_7422.png" alt="Samir talking" style="opacity:0;transition:opacity 0.4s ease;">
+    <img id="cat-img-3" src="images/IMG_7420.png" alt="Samir laughing" style="opacity:0;transition:opacity 0.4s ease;">
+  </div>
+</div>
+
 <video id="video-bg" autoplay muted playsinline>
   <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260330_145725_08886141-ed95-4a8e-8d6d-b75eaadce638.mp4" type="video/mp4">
 </video>
 <div class="video-overlay"></div>
 
-<!-- nav -->
 <nav>
   <a href="#home" class="nav-logo">helena le</a>
   <div class="nav-links lg" style="border-radius:999px;">
@@ -990,7 +1091,6 @@
   <a href="#contact" class="nav-cta lg" style="border-radius:999px;">hire me</a>
 </nav>
 
-<!-- mobile drawer -->
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeMenu()"></div>
 <div class="menu-drawer lg-strong" id="menu-drawer" style="border-radius:0 0 var(--radius-xl) var(--radius-xl);">
   <div class="drawer-header">
@@ -1006,17 +1106,11 @@
   </div>
 </div>
 
-<!-- page -->
 <div id="page">
 
-  <!-- hero -->
   <section id="home">
-
-    <!-- left -->
     <div class="hero-left">
       <div class="hero-panel lg-strong fade-rise">
-
-        <!-- mini nav in the panel -->
         <div class="hero-nav">
           <span class="hero-logo-text">hl.</span>
           <div class="menu-pill lg" style="border-radius:999px;cursor:pointer;" onclick="openMenu()">
@@ -1024,8 +1118,6 @@
             menu
           </div>
         </div>
-
-        <!-- hero text -->
         <div class="hero-center">
           <div class="section-tag fade-rise-1">frontend developer — hampton roads, va</div>
           <h1 class="hero-h1 fade-rise-1">
@@ -1034,14 +1126,12 @@
             <em>built with</em><br>
             intention.
           </h1>
-
           <a href="#projects" class="hero-cta lg-strong fade-rise-2" style="border-radius:999px;">
             <span class="cta-icon">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </span>
             view my work
           </a>
-
           <div class="pills fade-rise-3">
             <span class="pill lg" style="border-radius:999px;">react &amp; typescript</span>
             <span class="pill lg" style="border-radius:999px;">ui/ux design</span>
@@ -1049,7 +1139,6 @@
             <span class="pill lg" style="border-radius:999px;">open source</span>
             <span class="pill lg" style="border-radius:999px;">web development</span>
           </div>
-
           <div class="hero-quote fade-rise-4">
             <div class="quote-label">approach</div>
             <p class="quote-text">"Every line of code is <em>intentional</em>,<br>helping create smooth, functional experiences."</p>
@@ -1060,11 +1149,9 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 
-    <!-- right side (desktop only) -->
     <div class="hero-right">
       <div class="right-top">
         <div class="social-pill lg" style="border-radius:999px;">
@@ -1082,15 +1169,11 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
         </div>
       </div>
-
       <div class="community-card lg" style="border-radius:var(--radius-lg);">
         <h3>open to work</h3>
-        <p>looking for frontend / full-stack roles in the Hampton Roads area or remote. let's build something together.</p>
+        <p>looking for frontend roles in the Hampton Roads area or remote. let's build something together.</p>
       </div>
-
-      <img src="me.JPG" alt="Helena Le" class="hero-photo">
-
-
+      <img src="images/me.JPG" alt="Helena Le" class="hero-photo">
       <div class="feature-section lg-strong" style="border-radius:var(--radius-2xl);">
         <div class="feature-row">
           <div class="feat-card lg" style="border-radius:var(--radius-lg);">
@@ -1116,10 +1199,8 @@
         </a>
       </div>
     </div>
-
   </section>
 
-  <!-- about -->
   <section id="about">
     <div class="section-inner">
       <div class="about-left">
@@ -1134,7 +1215,6 @@
         <p class="about-body">
           I work with a small number of clients at a time so I can give each project the attention it deserves. Beyond coding, I enjoy reading, science, art, and gaming — and I occasionally write about things that interest me on <a href="https://medium.com/@sa.ai" target="_blank" style="color:rgba(255,255,255,0.7);text-underline-offset:3px;">Medium</a>.
         </p>
-
         <div class="skills-grid">
           <div class="skill-card lg" style="border-radius:var(--radius);">
             <h4>frontend</h4>
@@ -1154,7 +1234,6 @@
           </div>
         </div>
       </div>
-
       <div class="about-right">
         <div class="about-stat-panel lg-strong" style="border-radius:var(--radius-xl);">
           <div class="stat-item">
@@ -1181,7 +1260,6 @@
     </div>
   </section>
 
-  <!-- experience -->
   <section id="experience">
     <div class="section-inner">
       <div class="section-tag">experience</div>
@@ -1189,16 +1267,13 @@
         Where I've been,<br>
         <em>what I've built.</em>
       </h2>
-
       <div class="exp-list">
-        <div class="exp-card lg-strong" style="border-radius:var(--radius-lg);">
+        <div class="exp-card lg" style="border-radius:var(--radius-lg);">
           <div class="exp-date">2022 — present</div>
           <div class="exp-content">
             <div class="exp-role">Frontend Developer</div>
             <div class="exp-company">freelancer · helenaledev.com</div>
-            <p class="exp-desc">
-              Built responsive web interfaces for small businesses, focusing on mobile-first design and smooth performance. Worked with modern development tools and workflows to keep projects organized and efficient.
-            </p>
+            <p class="exp-desc">Built responsive web interfaces for small businesses, focusing on mobile-first design and smooth performance. Worked with modern development tools and workflows to keep projects organized and efficient.</p>
             <div class="tag-row">
               <span class="tech-tag lg" style="border-radius:999px;">javascript</span>
               <span class="tech-tag lg" style="border-radius:999px;">css</span>
@@ -1209,15 +1284,12 @@
             </div>
           </div>
         </div>
-
         <div class="exp-card lg" style="border-radius:var(--radius-lg);">
           <div class="exp-date">2020 — 2022</div>
           <div class="exp-content">
             <div class="exp-role">Foundational Studies</div>
             <div class="exp-company">personal projects</div>
-            <p class="exp-desc">
-              Started learning coding out of curiosity at 14, building small projects and experimenting with HTML and CSS. Developed a genuine interest in how things are made on the web.
-            </p>
+            <p class="exp-desc">Started learning coding out of curiosity at 14, building small projects and experimenting with HTML and CSS. Developed a genuine interest in how things are made on the web.</p>
             <div class="tag-row">
               <span class="tech-tag lg" style="border-radius:999px;">html</span>
               <span class="tech-tag lg" style="border-radius:999px;">css</span>
@@ -1230,7 +1302,6 @@
     </div>
   </section>
 
-  <!-- projects -->
   <section id="projects">
     <div class="section-inner">
       <div class="section-tag">selected works</div>
@@ -1238,67 +1309,47 @@
         Things I've<br>
         <em>shipped.</em>
       </h2>
-
       <div class="projects-grid">
-
-
-
-
-
-       <a href="https://sa0632.github.io/sentinel/" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
+        <a href="https://sa0632.github.io/sentinel/" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
           <div class="project-num">01</div>
           <div class="project-title">Sentinel</div>
           <p class="project-desc">data security SaaS site via React, TypeScript, Tailwind, 13 pages, typewriter animation.</p>
           <div class="project-footer">
             <span class="project-stack">react · typescript · tailwind</span>
-            <div class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </div>
+            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
-      </a>
-
-
+        </a>
         <a href="https://sa0632.github.io/forge" target="_blank" class="project-card lg-strong" style="border-radius:var(--radius-xl);">
           <div class="project-num">02</div>
           <div class="project-title">Forge</div>
           <p class="project-desc">Transform raw data into real-time, scalable insights with a fast, no-code pipeline built for modern teams.</p>
           <div class="project-footer">
             <span class="project-stack">html · css · javascript</span>
-            <div class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </div>
+            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-
         <a href="https://helenaledev.com/amysbanhmi" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
           <div class="project-num">03</div>
           <div class="project-title">Amy's Bánh Mì</div>
           <p class="project-desc">A landing page for a Vietnamese sandwich shop - featuring the menu, story, and contact info.</p>
           <div class="project-footer">
             <span class="project-stack">html · css · javascript</span>
-            <div class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </div>
+            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-
         <a href="https://sa0632.github.io/ashfordgame/" target="_blank" class="project-card lg-strong" style="border-radius:var(--radius-xl);">
           <div class="project-num">04</div>
           <div class="project-title">Ashford Case</div>
           <p class="project-desc">A short minimalistic detective game built with HTML, CSS, and JavaScript.</p>
           <div class="project-footer">
             <span class="project-stack">html · css · javascript</span>
-            <div class="project-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </div>
+            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-
       </div>
     </div>
   </section>
 
-  <!-- contact -->
   <section id="contact">
     <div class="section-inner">
       <div class="contact-left">
@@ -1308,73 +1359,40 @@
           something<br>
           <em>together.</em>
         </h2>
-        <p class="contact-sub">
-          Whether you need a new website, a refresh, or just want to talk frontend — I'm always open to a conversation. I work with a small number of clients at a time, so reach out early.
-        </p>
+        <p class="contact-sub">Whether you need a new website, a refresh, or just want to talk frontend — I'm always open to a conversation. I work with a small number of clients at a time, so reach out early.</p>
         <a href="mailto:helenale.dev@gmail.com" class="contact-email lg-strong" style="border-radius:999px;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           helenale.dev@gmail.com
         </a>
+        <a href="Resume.pdf" download class="contact-email lg-strong" style="border-radius:999px;margin-top:0.75rem;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          download my resume
+        </a>
       </div>
-
       <div class="contact-right">
         <div class="contact-links lg-strong" style="border-radius:var(--radius-xl);">
           <a href="https://github.com/sa0632" target="_blank" class="contact-link-item">
-            <div class="link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            </div>
-            <div>
-              <div class="link-label">GitHub</div>
-              <div class="link-sub">github.com/sa0632</div>
-            </div>
-            <div class="link-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
+            <div class="link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></div>
+            <div><div class="link-label">GitHub</div><div class="link-sub">github.com/sa0632</div></div>
+            <div class="link-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
           </a>
-
           <div style="height:1px;background:rgba(255,255,255,0.08);"></div>
-
           <a href="https://linkedin.com/in/helenaledev" target="_blank" class="contact-link-item">
-            <div class="link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-            </div>
-            <div>
-              <div class="link-label">LinkedIn</div>
-              <div class="link-sub">linkedin.com/in/helenaledev</div>
-            </div>
-            <div class="link-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
+            <div class="link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></div>
+            <div><div class="link-label">LinkedIn</div><div class="link-sub">linkedin.com/in/helenaledev</div></div>
+            <div class="link-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
           </a>
-
           <div style="height:1px;background:rgba(255,255,255,0.08);"></div>
-
           <a href="https://medium.com/@sa.ai" target="_blank" class="contact-link-item">
-            <div class="link-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg>
-            </div>
-            <div>
-              <div class="link-label">Medium</div>
-              <div class="link-sub">medium.com/@sa.ai</div>
-            </div>
-            <div class="link-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
+            <div class="link-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:rgba(255,255,255,0.6)"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/></svg></div>
+            <div><div class="link-label">Medium</div><div class="link-sub">medium.com/@sa.ai</div></div>
+            <div class="link-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
           </a>
-
           <div style="height:1px;background:rgba(255,255,255,0.08);"></div>
-
           <a href="https://helenaledev.com" target="_blank" class="contact-link-item">
-            <div class="link-icon">
-              <img src="favicon.ico" width="16" height="16" alt="Portfolio" style="opacity:0.6;object-fit:contain;">
-            </div>
-            <div>
-              <div class="link-label">Portfolio</div>
-              <div class="link-sub">helenaledev.com</div>
-            </div>
-            <div class="link-arrow">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
-            </div>
+            <div class="link-icon"><img src="favicon.ico" width="16" height="16" alt="Portfolio" style="opacity:0.6;object-fit:contain;"></div>
+            <div><div class="link-label">Portfolio</div><div class="link-sub">helenaledev.com</div></div>
+            <div class="link-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></div>
           </a>
         </div>
       </div>
@@ -1384,7 +1402,40 @@
 </div>
 
 <footer>
-  <div style="display:flex;flex-direction:column;align-items:center;padding:4rem 2rem 2.5rem;gap:1.5rem;">
+  <div style="display:flex;flex-direction:column;align-items:center;padding:4rem 2rem 2rem;gap:1rem;">
+
+    <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.5rem;">me & samir</div>
+
+    <div id="photo-carousel" style="position:relative;">
+      <div id="carousel-track">
+        <div id="carousel-inner">
+          <img src="images/IMG_2712.jpeg" alt="Helena and Samir">
+          <img src="images/IMG_6054.jpeg" alt="Helena and Samir">
+          <img src="images/IMG_1116.jpeg" alt="Samir in Santa costume" style="object-position:center center;">
+          <img src="images/IMG_1431.jpeg" alt="Samir in a bag" style="object-fit:contain;object-position:center center;background:#0d0d0d;">
+          <img src="images/IMG_3688.jpeg" alt="Helena and Samir with filters" style="object-fit:contain;object-position:center center;background:#0d0d0d;">
+          <img src="images/IMG_3895.jpeg" alt="Samir playing chess">
+        </div>
+      </div>
+      <button class="carousel-btn prev" onclick="carouselPrev()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <button class="carousel-btn next" onclick="carouselNext()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <div style="display:flex;justify-content:center;gap:0.4rem;margin-top:1rem;">
+        <span class="cdot active"></span>
+        <span class="cdot"></span>
+        <span class="cdot"></span>
+        <span class="cdot"></span>
+        <span class="cdot"></span>
+        <span class="cdot"></span>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="display:flex;flex-direction:column;align-items:center;padding:2rem 2rem 2.5rem;gap:1.5rem;">
     <pre id="ascii-cube" style="font-family:monospace;font-size:0.75rem;line-height:1.3;color:rgba(255,255,255,0.35);letter-spacing:0.05em;text-align:center;user-select:none;transition:color 0.3s;white-space:pre;"></pre>
     <div style="display:flex;flex-direction:column;align-items:center;gap:0.35rem;">
       <span style="font-family:'Poppins',sans-serif;font-size:1rem;font-weight:600;letter-spacing:-0.03em;color:rgba(255,255,255,0.5);">helena le</span>
@@ -1405,19 +1456,12 @@
     [4,5],[5,6],[6,7],[7,4],
     [0,4],[1,5],[2,6],[3,7]
   ];
-
   const W = 38, H = 18;
   let ax = 0.4, ay = 0.6, az = 0.2;
-
   function project([x,y,z]) {
-    const fov = 4;
-    const scale = fov / (fov + z);
-    return [
-      Math.round((x * scale * 7) + W / 2),
-      Math.round((y * scale * 3.5) + H / 2)
-    ];
+    const fov = 4, scale = fov / (fov + z);
+    return [Math.round((x * scale * 7) + W / 2), Math.round((y * scale * 3.5) + H / 2)];
   }
-
   function rotate([x,y,z], rx,ry,rz) {
     let nx,ny,nz;
     ny = y*cos(rx) - z*sin(rx); nz = y*sin(rx) + z*cos(rx); y=ny; z=nz;
@@ -1425,104 +1469,131 @@
     nx = x*cos(rz) - y*sin(rz); ny = x*sin(rz) + y*cos(rz);
     return [nx, ny, nz];
   }
-
   function draw() {
     const grid = Array.from({length:H}, () => Array(W).fill(' '));
-
     const rotated = vertices.map(v => rotate(v, ax, ay, az));
     const projected = rotated.map(project);
-
     edges.forEach(([a,b]) => {
-      const [x0,y0] = projected[a];
-      const [x1,y1] = projected[b];
+      const [x0,y0] = projected[a], [x1,y1] = projected[b];
       const steps = Math.max(Math.abs(x1-x0), Math.abs(y1-y0), 1) * 2;
       for (let i=0; i<=steps; i++) {
         const t = i/steps;
-        const px = Math.round(x0 + (x1-x0)*t);
-        const py = Math.round(y0 + (y1-y0)*t);
+        const px = Math.round(x0 + (x1-x0)*t), py = Math.round(y0 + (y1-y0)*t);
         if (px>=0 && px<W && py>=0 && py<H) {
           const dx = Math.abs(x1-x0), dy = Math.abs(y1-y0);
           grid[py][px] = dx > dy*1.8 ? '-' : dy > dx*1.8 ? '|' : (((x1-x0)*(y1-y0))>0 ? '\\' : '/');
         }
       }
     });
-
-    projected.forEach(([px,py]) => {
-      if (px>=0 && px<W && py>=0 && py<H) grid[py][px] = '+';
-    });
-
+    projected.forEach(([px,py]) => { if (px>=0 && px<W && py>=0 && py<H) grid[py][px] = '+'; });
     document.getElementById('ascii-cube').textContent = grid.map(r=>r.join('')).join('\n');
     ax += 0.008; ay += 0.012; az += 0.005;
     requestAnimationFrame(draw);
   }
-
   const cubeEl = document.getElementById('ascii-cube');
   cubeEl.addEventListener('mouseenter', () => cubeEl.style.color = 'rgba(255,255,255,0.7)');
   cubeEl.addEventListener('mouseleave', () => cubeEl.style.color = 'rgba(255,255,255,0.35)');
-
   draw();
 })();
 </script>
 
 <script>
-  const video = document.getElementById('video-bg');
-  let rafId;
-
+  const videoEl = document.getElementById('video-bg');
   function tick() {
-    if (!video.duration) { rafId = requestAnimationFrame(tick); return; }
-    const t = video.currentTime;
-    const d = video.duration;
-    const fadeDur = 0.5;
-    if (t < fadeDur) {
-      video.style.opacity = t / fadeDur;
-    } else if (t > d - fadeDur) {
-      video.style.opacity = (d - t) / fadeDur;
-    } else {
-      video.style.opacity = 1;
-    }
-    rafId = requestAnimationFrame(tick);
+    if (!videoEl.duration) { requestAnimationFrame(tick); return; }
+    const t = videoEl.currentTime, d = videoEl.duration, fd = 0.5;
+    videoEl.style.opacity = t < fd ? t/fd : t > d-fd ? (d-t)/fd : 1;
+    requestAnimationFrame(tick);
   }
+  videoEl.addEventListener('canplay', () => { videoEl.play().catch(()=>{}); requestAnimationFrame(tick); });
+  videoEl.addEventListener('ended', () => { videoEl.style.opacity = 0; setTimeout(() => { videoEl.currentTime = 0; videoEl.play().catch(()=>{}); }, 100); });
 
-  video.addEventListener('canplay', () => {
-    video.play().catch(() => {});
-    rafId = requestAnimationFrame(tick);
-  });
-
-  video.addEventListener('ended', () => {
-    video.style.opacity = 0;
-    setTimeout(() => {
-      video.currentTime = 0;
-      video.play().catch(() => {});
-    }, 100);
-  });
-
-  // show fixed nav only after scrolling past hero
   const fixedNav = document.querySelector('nav');
   const heroSection = document.getElementById('home');
-
   function onScroll() {
-    const heroBottom = heroSection.offsetTop + heroSection.offsetHeight;
-    if (window.scrollY > heroBottom - 80) {
-      fixedNav.classList.add('visible');
-    } else {
-      fixedNav.classList.remove('visible');
-    }
+    fixedNav.classList.toggle('visible', window.scrollY > heroSection.offsetTop + heroSection.offsetHeight - 80);
   }
-
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // menu drawer
   function openMenu() {
     document.getElementById('menu-drawer').classList.add('open');
     document.getElementById('drawer-overlay').classList.add('open');
     document.body.style.overflow = 'hidden';
   }
-
   function closeMenu() {
     document.getElementById('menu-drawer').classList.remove('open');
     document.getElementById('drawer-overlay').classList.remove('open');
     document.body.style.overflow = '';
   }
+</script>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+
+  const catImg1 = document.getElementById('cat-img-1');
+  const catImg2 = document.getElementById('cat-img-2');
+  const catImg3 = document.getElementById('cat-img-3');
+  const catMessage = document.getElementById('cat-message');
+  const catWidget = document.getElementById('cat-widget');
+  const aboutSection = document.getElementById('about');
+
+  const samirLines = [
+    "Hi, I'm Samir!",
+    "Helena is my owner",
+    "She's the coolest person ever",
+    "....",
+    "meow 🐱"
+  ];
+
+  ScrollTrigger.create({
+    trigger: aboutSection,
+    start: 'top 80%',
+    end: 'bottom 20%',
+    onEnter: () => catWidget.classList.add('visible'),
+    onLeave: () => catWidget.classList.remove('visible'),
+    onEnterBack: () => catWidget.classList.add('visible'),
+    onLeaveBack: () => catWidget.classList.remove('visible'),
+  });
+
+  ScrollTrigger.create({
+    trigger: aboutSection,
+    start: 'top center',
+    end: 'bottom center',
+    scrub: 0.5,
+    onUpdate: (self) => {
+      const p = self.progress;
+      if (p < 0.2) {
+        catImg1.style.opacity = 1; catImg2.style.opacity = 0; catImg3.style.opacity = 0;
+        catMessage.textContent = samirLines[0];
+      } else if (p < 0.4) {
+        catImg1.style.opacity = 0; catImg2.style.opacity = 1; catImg3.style.opacity = 0;
+        catMessage.textContent = samirLines[1];
+      } else if (p < 0.6) {
+        catImg1.style.opacity = 0; catImg2.style.opacity = 1; catImg3.style.opacity = 0;
+        catMessage.textContent = samirLines[2];
+      } else if (p < 0.85) {
+        catImg1.style.opacity = 1; catImg2.style.opacity = 0; catImg3.style.opacity = 0;
+        catMessage.textContent = samirLines[3];
+      } else {
+        catImg1.style.opacity = 0; catImg2.style.opacity = 0; catImg3.style.opacity = 1;
+        catMessage.textContent = samirLines[4];
+      }
+    }
+  });
+
+  // carousel
+  let carouselIdx = 0;
+  const totalSlides = 6;
+  const carouselInner = document.getElementById('carousel-inner');
+  const dots = document.querySelectorAll('.cdot');
+
+  function updateCarousel() {
+    gsap.to(carouselInner, { x: -(carouselIdx * 100) + '%', duration: 0.5, ease: 'power2.out' });
+    dots.forEach((d, i) => d.classList.toggle('active', i === carouselIdx));
+  }
+
+  function carouselNext() { carouselIdx = (carouselIdx + 1) % totalSlides; updateCarousel(); }
+  function carouselPrev() { carouselIdx = (carouselIdx - 1 + totalSlides) % totalSlides; updateCarousel(); }
 </script>
 
 </body>
