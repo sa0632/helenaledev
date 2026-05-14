@@ -763,6 +763,28 @@
 
   .project-card:hover { transform: translateY(-3px); }
 
+  @keyframes glow-blue {
+    0%, 100% { box-shadow: 0 0 0 1.5px rgba(66,133,244,0.5), 0 0 18px rgba(66,133,244,0.35); }
+    50%       { box-shadow: 0 0 0 2.5px rgba(66,133,244,0.9), 0 0 32px rgba(66,133,244,0.6); }
+  }
+  @keyframes glow-red {
+    0%, 100% { box-shadow: 0 0 0 1.5px rgba(234,67,53,0.5), 0 0 18px rgba(234,67,53,0.35); }
+    50%       { box-shadow: 0 0 0 2.5px rgba(234,67,53,0.9), 0 0 32px rgba(234,67,53,0.6); }
+  }
+  @keyframes glow-yellow {
+    0%, 100% { box-shadow: 0 0 0 1.5px rgba(251,188,5,0.5), 0 0 18px rgba(251,188,5,0.35); }
+    50%       { box-shadow: 0 0 0 2.5px rgba(251,188,5,0.9), 0 0 32px rgba(251,188,5,0.6); }
+  }
+  @keyframes glow-green {
+    0%, 100% { box-shadow: 0 0 0 1.5px rgba(52,168,83,0.5), 0 0 18px rgba(52,168,83,0.35); }
+    50%       { box-shadow: 0 0 0 2.5px rgba(52,168,83,0.9), 0 0 32px rgba(52,168,83,0.6); }
+  }
+
+  .project-card.glow-blue:hover   { animation: glow-blue   1.4s ease-in-out infinite; }
+  .project-card.glow-red:hover    { animation: glow-red    1.4s ease-in-out infinite; }
+  .project-card.glow-yellow:hover { animation: glow-yellow 1.4s ease-in-out infinite; }
+  .project-card.glow-green:hover  { animation: glow-green  1.4s ease-in-out infinite; }
+
   .project-num {
     font-size: 0.65rem;
     letter-spacing: 0.1em;
@@ -1315,7 +1337,7 @@
         <em>shipped.</em>
       </h2>
       <div class="projects-grid">
-        <a href="https://sa0632.github.io/sentinel/" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
+        <a href="https://sa0632.github.io/sentinel/" target="_blank" class="project-card lg glow-blue" style="border-radius:var(--radius-xl);">
           <div class="project-num">01</div>
           <div class="project-title">Sentinel</div>
           <p class="project-desc">Data security SaaS site via React, TypeScript, Tailwind, 13 pages, typewriter animation.</p>
@@ -1324,7 +1346,7 @@
             <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-        <a href="https://sa0632.github.io/prioritize/" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
+        <a href="https://sa0632.github.io/prioritize/" target="_blank" class="project-card lg glow-red" style="border-radius:var(--radius-xl);">
           <div class="project-num">02</div>
           <div class="project-title">Prioritize</div>
           <p class="project-desc">A modern 13 page task management app built with React and TypeScript.</p>
@@ -1333,7 +1355,7 @@
             <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-        <a href="https://sa0632.github.io/forge" target="_blank" class="project-card lg" style="border-radius:var(--radius-xl);">
+        <a href="https://sa0632.github.io/forge" target="_blank" class="project-card lg glow-yellow" style="border-radius:var(--radius-xl);">
           <div class="project-num">03</div>
           <div class="project-title">Forge</div>
           <p class="project-desc">Transform raw data into real-time, scalable insights with a fast, no-code pipeline built for modern teams.</p>
@@ -1342,7 +1364,7 @@
             <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-        <a href="https://helenaledev.com/amysbanhmi" target="_blank" class="project-card lg-strong" style="border-radius:var(--radius-xl);">
+        <a href="https://helenaledev.com/amysbanhmi" target="_blank" class="project-card lg-strong glow-green" style="border-radius:var(--radius-xl);">
           <div class="project-num">04</div>
           <div class="project-title">Amy's Bánh Mì</div>
           <p class="project-desc">A landing page for a Vietnamese sandwich shop - featuring the menu, story, and contact info.</p>
@@ -1351,7 +1373,7 @@
             <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-        <a href="https://sa0632.github.io/lawyerfirm/" target="_blank" class="project-card lg-strong" style="border-radius:var(--radius-xl);">
+        <a href="https://sa0632.github.io/lawyerfirm/" target="_blank" class="project-card lg-strong glow-blue" style="border-radius:var(--radius-xl);">
           <div class="project-num">05</div>
           <div class="project-title">Voss & Merritt LLP</div>
           <p class="project-desc">A premium landing page for a Hampton Roads law firm — video hero, attorney profiles, case results, and contact form.</p>
@@ -1360,7 +1382,7 @@
             <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           </div>
         </a>
-        <a href="https://sa0632.github.io/ashfordgame/" target="_blank" class="project-card lg-strong" style="border-radius:var(--radius-xl);">
+        <a href="https://sa0632.github.io/ashfordgame/" target="_blank" class="project-card lg-strong glow-red" style="border-radius:var(--radius-xl);">
           <div class="project-num">06</div>
           <div class="project-title">Ashford Case</div>
           <p class="project-desc">A short minimalistic detective game built with HTML, CSS, and JavaScript.</p>
