@@ -752,6 +752,172 @@
     gap: 1rem;
   }
 
+  /* ===== Tilted carousel (projects) ===== */
+  .tc-root {
+    position: relative;
+    color: #fff;
+    -webkit-user-select: none;
+    user-select: none;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tc-wrap {
+    width: 20rem;
+    margin: 1rem 0 0;
+  }
+
+  @media (min-width: 700px) {
+    .tc-wrap { width: 30rem; }
+  }
+
+  .tc-track {
+    display: flex;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .tc-slide-outer {
+    perspective: 1400px;
+  }
+
+  .tc-slide-outer:not(:first-child) {
+    margin-left: 2.4rem;
+  }
+
+  @media (min-width: 700px) {
+    .tc-slide-outer:not(:first-child) { margin-left: 3.6rem; }
+  }
+
+  .tc-slide {
+    width: 20rem;
+    aspect-ratio: 8 / 5;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    will-change: transform;
+  }
+
+  @media (min-width: 700px) {
+    .tc-slide { width: 30rem; }
+  }
+
+  .tc-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+  }
+
+  .tc-embed {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.5);
+    background: #0d0d0d;
+  }
+
+  .tc-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1440px;
+    height: 900px;
+    border: 0;
+    pointer-events: none;
+    transform-origin: top left;
+    transform: scale(0.22222);
+  }
+
+  @media (min-width: 700px) {
+    .tc-embed iframe { transform: scale(0.33333); }
+  }
+
+  .tc-embed-loading {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 0.75rem;
+    background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+    color: rgba(255,255,255,0.4);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .tc-embed-spinner {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    border-top-color: rgba(255,255,255,0.7);
+    animation: tc-spin 0.8s linear infinite;
+  }
+
+  @keyframes tc-spin { to { transform: rotate(360deg); } }
+
+  .tc-slide-title {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    will-change: filter, opacity;
+  }
+
+  .tc-controls {
+    margin: 1rem 0 0;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(6px);
+  }
+
+  .tc-controls button {
+    all: unset;
+    display: flex;
+    padding: 0.4rem;
+    cursor: pointer;
+    color: rgba(255,255,255,0.75);
+  }
+
+  .tc-controls button:hover { color: #fff; }
+  .tc-controls button:disabled { opacity: 0.3; cursor: default; }
+
+  .tc-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .tc-dot {
+    height: 0.4rem;
+    width: 0.4rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: width 0.3s ease, background-color 0.3s ease;
+  }
+
+  .tc-dot.is-active {
+    width: 1.4rem;
+    background: #fff;
+  }
+
   .project-card {
     border-radius: var(--radius-xl);
     padding: 1.75rem;
@@ -1336,62 +1502,7 @@
         Things I've<br>
         <em>shipped.</em>
       </h2>
-      <div class="projects-grid">
-        <a href="https://sa0632.github.io/sentinel/" target="_blank" class="project-card lg glow-blue" style="border-radius:var(--radius-xl);">
-          <div class="project-num">01</div>
-          <div class="project-title">Sentinel</div>
-          <p class="project-desc">Data security SaaS site via React, TypeScript, Tailwind, 13 pages, typewriter animation.</p>
-          <div class="project-footer">
-            <span class="project-stack">react · typescript · tailwind</span>
-            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-        </a>
-        <a href="https://sa0632.github.io/prioritize/" target="_blank" class="project-card lg glow-red" style="border-radius:var(--radius-xl);">
-          <div class="project-num">02</div>
-          <div class="project-title">Prioritize</div>
-          <p class="project-desc">A modern 13 page task management app built with React and TypeScript.</p>
-          <div class="project-footer">
-            <span class="project-stack">react · typescript</span>
-            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-        </a>
-        <a href="https://sa0632.github.io/prmpt/" target="_blank" class="project-card lg glow-yellow" style="border-radius:var(--radius-xl);">
-          <div class="project-num">03</div>
-          <div class="project-title">Prmpt</div>
-          <p class="project-desc">A scroll-driven fashion archive landing page with a cursor-scrubbed video hero and a scaling image gallery.</p>
-          <div class="project-footer">
-            <span class="project-stack">react · typescript · gsap</span>
-            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-        </a>
-        <a href="https://helenaledev.com/amysbanhmi" target="_blank" class="project-card lg-strong glow-green" style="border-radius:var(--radius-xl);">
-          <div class="project-num">04</div>
-          <div class="project-title">Amy's Bánh Mì</div>
-          <p class="project-desc">A landing page for a Vietnamese sandwich shop - featuring the menu, story, and contact info.</p>
-          <div class="project-footer">
-            <span class="project-stack">html · css · javascript</span>
-            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-        </a>
-        <a href="https://sa0632.github.io/lawyerfirm/" target="_blank" class="project-card lg-strong glow-blue" style="border-radius:var(--radius-xl);">
-          <div class="project-num">05</div>
-          <div class="project-title">Voss & Merritt LLP</div>
-          <p class="project-desc">A premium landing page for a Hampton Roads law firm — video hero, attorney profiles, case results, and contact form.</p>
-          <div class="project-footer">
-            <span class="project-stack">html · css · javascript</span>
-            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-        </a>
-        <a href="https://sa0632.github.io/ashfordgame/" target="_blank" class="project-card lg-strong glow-red" style="border-radius:var(--radius-xl);">
-          <div class="project-num">06</div>
-          <div class="project-title">Ashford Case</div>
-          <p class="project-desc">A short minimalistic detective game built with HTML, CSS, and JavaScript.</p>
-          <div class="project-footer">
-            <span class="project-stack">html · css · javascript</span>
-            <div class="project-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          </div>
-        </a>
-      </div>
+      <div id="tilted-carousel" class="tc-root"></div>
     </div>
   </section>
 
@@ -1640,6 +1751,107 @@
 
   function carouselNext() { carouselIdx = (carouselIdx + 1) % totalSlides; updateCarousel(); }
   function carouselPrev() { carouselIdx = (carouselIdx - 1 + totalSlides) % totalSlides; updateCarousel(); }
+</script>
+
+<script type="module">
+  import React, { useState } from "https://esm.sh/react@19";
+  import { createRoot } from "https://esm.sh/react-dom@19/client";
+  import { motion } from "https://esm.sh/motion/react";
+  import { ChevronLeft, ChevronRight } from "https://esm.sh/lucide-react";
+
+  const h = React.createElement;
+
+  // type "iframe" = live embed of the real site, "image" = static fallback (used
+  // when a live embed isn't practical, e.g. a page with an intro video/loader)
+  const PROJECTS = [
+    { type: "iframe", src: "https://sa0632.github.io/sentinel/", title: "Sentinel", href: "https://sa0632.github.io/sentinel/" },
+    { type: "iframe", src: "https://sa0632.github.io/prioritize/", title: "Prioritize", href: "https://sa0632.github.io/prioritize/" },
+    { type: "image", src: "images/projects/prmpt.png", title: "Prmpt", href: "https://sa0632.github.io/prmpt/" },
+    { type: "iframe", src: "amysbanhmi/index.html", title: "Amy's Bánh Mì", href: "https://helenaledev.com/amysbanhmi" },
+    { type: "iframe", src: "https://sa0632.github.io/lawyerfirm/", title: "Voss & Merritt LLP", href: "https://sa0632.github.io/lawyerfirm/" },
+    { type: "iframe", src: "https://sa0632.github.io/ashfordgame/", title: "Ashford Case", href: "https://sa0632.github.io/ashfordgame/" },
+  ];
+
+  // slides sit this fraction of a card's width apart (matches the CSS
+  // margin-left on .tc-slide-outer), which grows the track's total width —
+  // the % translated per step below is derived from it so the spring
+  // animation still lands each card dead center.
+  const GAP_RATIO = 0.12;
+  const N = PROJECTS.length;
+  const PERCENT_PER_STEP = ((1 + GAP_RATIO) / (N + (N - 1) * GAP_RATIO)) * 100;
+
+  function TiltedCarousel() {
+    const [activeIndex, setActiveIndex] = useState(2);
+    const [loaded, setLoaded] = useState(() => new Set());
+    const markLoaded = (i) => setLoaded((prev) => new Set(prev).add(i));
+
+    const toPrev = () => setActiveIndex((p) => Math.max(0, p - 1));
+    const toNext = () => setActiveIndex((p) => Math.min(PROJECTS.length - 1, p + 1));
+    const toSlide = (i) => setActiveIndex(i);
+    const openSlide = (i) => {
+      if (i === activeIndex) window.open(PROJECTS[i].href, "_blank");
+      else toSlide(i);
+    };
+
+    return h("div", null,
+      h("div", { className: "tc-wrap" },
+        h(motion.div, {
+          className: "tc-track",
+          animate: { x: `${-activeIndex * PERCENT_PER_STEP}%` },
+          transition: { type: "spring", bounce: 0.2, duration: 0.8 },
+        },
+          PROJECTS.map((item, i) => {
+            const isActive = activeIndex === i;
+            const isLoaded = loaded.has(i);
+            const media = item.type === "iframe"
+              ? h("div", { className: "tc-embed", onClick: () => openSlide(i) },
+                  // mounted immediately (all slides preload together) so switching
+                  // between cards is instant once the loading pass finishes
+                  h("iframe", { src: item.src, title: item.title, onLoad: () => markLoaded(i) }),
+                  !isLoaded && h("div", { className: "tc-embed-loading" },
+                    h("span", { className: "tc-embed-spinner" }),
+                    "loading preview"
+                  )
+                )
+              : h("img", {
+                  src: item.src,
+                  alt: item.title,
+                  onClick: () => openSlide(i),
+                });
+
+            return h("div", { className: "tc-slide-outer", key: i },
+              h(motion.div, {
+                className: "tc-slide",
+                animate: { rotateY: (activeIndex - i) * 30, scale: isActive ? 1 : 0.85 },
+                transition: { type: "spring", bounce: 0.1, duration: 1 },
+              },
+                media,
+                h(motion.div, {
+                  className: "tc-slide-title",
+                  animate: { filter: isActive ? "blur(0)" : "blur(2px)", opacity: isActive ? 1 : 0 },
+                }, item.title)
+              )
+            );
+          })
+        )
+      ),
+      h("div", { className: "tc-controls" },
+        h("button", { onClick: toPrev, disabled: activeIndex === 0, "aria-label": "Previous project" }, h(ChevronLeft, { size: 18 })),
+        h("div", { className: "tc-dots" },
+          PROJECTS.map((_, i) =>
+            h("div", {
+              key: i,
+              className: "tc-dot" + (activeIndex === i ? " is-active" : ""),
+              onClick: () => toSlide(i),
+            })
+          )
+        ),
+        h("button", { onClick: toNext, disabled: activeIndex === PROJECTS.length - 1, "aria-label": "Next project" }, h(ChevronRight, { size: 18 }))
+      )
+    );
+  }
+
+  createRoot(document.getElementById("tilted-carousel")).render(h(TiltedCarousel));
 </script>
 
 </body>
