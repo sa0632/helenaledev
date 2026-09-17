@@ -26,7 +26,10 @@
     --radius-2xl: 2.5rem;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
 
   body {
     font-family: 'Poppins', sans-serif;
@@ -767,6 +770,7 @@
   .tc-wrap {
     width: 20rem;
     margin: 1rem 0 0;
+    overflow: hidden;
   }
 
   @media (min-width: 700px) {
@@ -1129,6 +1133,23 @@
     display: block;
   }
 
+  /* Same header photo, shown in the About section instead — only on
+     screens narrower than where .hero-right (and its copy of this photo)
+     appears, so the photo always shows exactly once. */
+  .about-photo {
+    display: block;
+    width: 200px;
+    margin: 0 auto 1.5rem;
+    border-radius: var(--radius-xl);
+    object-fit: cover;
+    object-position: center top;
+    aspect-ratio: 3 / 4;
+  }
+
+  @media (min-width: 1024px) {
+    .about-photo { display: none; }
+  }
+
   /* floating cat widget */
   #cat-widget {
     position: fixed;
@@ -1428,6 +1449,7 @@
         </div>
       </div>
       <div class="about-right">
+        <img src="images/me.JPG" alt="Helena Le" class="about-photo">
         <div class="about-stat-panel lg-strong" style="border-radius:var(--radius-xl);">
           <div class="stat-item">
             <div class="stat-num">4+</div>
