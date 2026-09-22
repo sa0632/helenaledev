@@ -767,6 +767,12 @@
     align-items: center;
   }
 
+  .tc-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .tc-wrap {
     width: 20rem;
     margin: 1rem 0 0;
@@ -1816,7 +1822,7 @@
       else toSlide(i);
     };
 
-    return h("div", null,
+    return h("div", { className: "tc-body" },
       h("div", { className: "tc-wrap" },
         h(motion.div, {
           className: "tc-track",
